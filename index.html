@@ -1,444 +1,716 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="az" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RM Manager - Pro Simulation Edition</title>
-  <style>
-    :root {
-      --bg-main: #0a0f1d;
-      --panel-bg: rgba(18, 26, 45, 0.9);
-      --accent: #00f2fe;
-      --text: #ffffff;
-      --text-dim: #94a3b8;
-      --success: #10b981;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --card-bg: rgba(255, 255, 255, 0.05);
-    }
-
-    /* DYNAMIC AUTOMATIC TOURNAMENT THEMES */
-    body.type-ucl {
-      --bg-main: #020518;
-      --panel-bg: rgba(10, 20, 50, 0.92);
-      --accent: #00d4ff;
-      background: radial-gradient(circle at top, #0d225c 0%, #020518 100%) !important;
-    }
-    body.type-uel {
-      --bg-main: #140801;
-      --panel-bg: rgba(40, 20, 5, 0.92);
-      --accent: #ff7700;
-      background: radial-gradient(circle at top, #482103 0%, #140801 100%) !important;
-    }
-    body.type-uecl {
-      --bg-main: #021409;
-      --panel-bg: rgba(5, 40, 18, 0.92);
-      --accent: #10b981;
-      background: radial-gradient(circle at top, #064e29 0%, #021409 100%) !important;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg-main); color: var(--text); padding: 15px; transition: background 0.8s ease, color 0.5s ease; min-height: 100vh; }
-
-    header { text-align: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    header h1 { font-size: 2rem; color: var(--accent); text-shadow: 0 0 12px var(--accent); letter-spacing: 1px; }
-
-    .container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
-    @media (max-width: 1024px) { .container { grid-template-columns: 1fr; } }
-
-    .panel { background: var(--panel-bg); backdrop-filter: blur(12px); border-radius: 12px; padding: 18px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 30px rgba(0,0,0,0.5); margin-bottom: 15px; }
-    h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-
-    .btn { background: var(--accent); color: #000; border: none; padding: 8px 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
-    .btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
-    .btn-large { width: 100%; padding: 14px; font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; }
-
-    select, input { padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.2); width: 100%; margin-bottom: 12px; outline: none; }
-
-    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-    th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    th { background: rgba(0,0,0,0.5); color: var(--text-dim); }
-
-    /* REAL FUTBOL MEYDANÇASI VƏ QRAFİKA */
-    .pitch {
-      background: linear-gradient(180deg, #155e2b 0%, #0e3d1c 100%);
-      border-radius: 10px;
-      padding: 15px;
-      min-height: 420px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border: 3px solid rgba(255,255,255,0.3);
-      position: relative;
-      box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-    }
-    .pitch::before {
-      content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.2); transform: translateY(-50%);
-    }
-    .pitch-row { display: flex; justify-content: space-around; gap: 5px; z-index: 2; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroPitch - Əfsanəvi Futbol Matçları Arxivi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Playfair Display for Retro-Modern Contrast -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
     
-    .player-card {
-      background: rgba(10, 15, 29, 0.9);
-      border: 1px solid var(--accent);
-      border-radius: 6px;
-      padding: 6px 8px;
-      font-size: 0.75rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      min-width: 80px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    }
-    .player-card:hover { transform: scale(1.1); background: var(--accent); color: #000; }
-    .player-card.selected { border: 2px solid var(--danger); background: rgba(239, 68, 68, 0.4) !important; animation: pulse 1s infinite; }
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        pitch: {
+                            900: '#06140e',
+                            800: '#0b2218',
+                            700: '#113526',
+                            600: '#1b4d37',
+                            500: '#286d4f',
+                        },
+                        retroGold: {
+                            400: '#f1d170',
+                            500: '#d4af37',
+                            600: '#aa8823',
+                        },
+                        vintageDark: '#0d0f12',
+                        vintageCard: '#151921',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
 
-    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    <style>
+        body {
+            background-color: #0d0f12;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
 
-    /* MATCH SIMULATION TIMELINE */
-    .sim-log { max-height: 200px; overflow-y: auto; font-size: 0.8rem; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; display: flex; flex-direction: column; gap: 5px; }
-    .log-item { border-left: 3px solid var(--accent); padding-left: 6px; }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #f7e092 0%, #d4af37 50%, #997a15 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    #selectionScreen { max-width: 450px; margin: 40px auto; }
-    #gameScreen { display: none; }
-  </style>
+        .gold-border {
+            border-image: linear-gradient(to bottom right, #f1d170, #aa8823) 1;
+        }
+
+        .glass-card {
+            background: rgba(21, 25, 33, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.15);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0f12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1b4d37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+
+        .modal-blur {
+            backdrop-filter: blur(8px);
+        }
+    </style>
 </head>
-<body class="type-league">
+<body class="min-h-screen flex flex-col justify-between selection:bg-retroGold-500 selection:text-black">
 
-  <header>
-    <h1>⚽ RM MANAGER - REAL SIMULATION</h1>
-    <p style="font-size: 0.85rem; color: var(--text-dim);" id="matchInfoBar">Növbəti Oyun Məlumatı...</p>
-  </header>
+    <!-- HEADER & NAVBAR -->
+    <header class="sticky top-0 z-40 bg-vintageDark/90 backdrop-blur-md border-b border-retroGold-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-retroGold-400 to-pitch-700 flex items-center justify-center shadow-lg border border-retroGold-500/50">
+                        <i class="fa-solid fa-futbol text-vintageDark text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-2xl font-bold tracking-wider text-white">RETRO<span class="gold-gradient-text">PITCH</span></span>
+                        <span class="block text-[10px] tracking-widest text-retroGold-400 uppercase font-semibold">Tarixi Matçlar Arxivi</span>
+                    </div>
+                </div>
 
-  <!-- SEÇİM EKRANI -->
-  <div id="selectionScreen" class="panel">
-    <h2>Karyeraya Başla</h2>
-    <label>Ölkə Seçin:</label>
-    <select id="selectCountry" onchange="updateTeamDropdown()">
-      <option value="AZ">Azərbaycan (Premyer Liqa)</option>
-      <option value="TR">Türkiyə (Süper Lig)</option>
-    </select>
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#hero" class="text-retroGold-400 hover:text-white transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-house text-xs"></i> Ana Səhifə
+                    </a>
+                    <a href="#matches" class="text-gray-300 hover:text-retroGold-400 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-film text-xs"></i> Matçlar
+                    </a>
+                    <a href="#tournaments" class="text-gray-300 hover:text-retroGold-400 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-trophy text-xs"></i> Turnirlər
+                    </a>
+                    <a href="#legends" class="text-gray-300 hover:text-retroGold-400 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-star text-xs"></i> Əfsanələr
+                    </a>
+                </nav>
 
-    <label>Komanda Seçin:</label>
-    <select id="selectTeam"></select>
+                <!-- Search Input Bar -->
+                <div class="relative hidden sm:block w-64">
+                    <input type="text" id="searchInput" onkeyup="filterMatches()" placeholder="Komanda, futbolçu və ya il axtar..." 
+                           class="w-full bg-pitch-900/80 border border-retroGold-500/30 text-xs rounded-full py-2.5 pl-9 pr-4 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-retroGold-400 transition-all">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-500 text-xs"></i>
+                </div>
 
-    <button class="btn btn-large" onclick="startGame()">Komandanı Təhvil Al ▶</button>
-  </div>
-
-  <!-- ƏSAS OYUN EKRANI -->
-  <div id="gameScreen">
-    <button class="btn btn-large" style="background: linear-gradient(135deg, #10b981, #00f2fe);" onclick="playMatchSimulation()">⚽ Növbəti Matçı Oyna (Canlı Simulyasiya)</button>
-
-    <div class="container">
-      <!-- SOL SÜTUN -->
-      <div>
-        <!-- TAKTİKA VƏ HEYƏT -->
-        <div class="panel">
-          <h2>
-            <span>📋 İlk 11-lik (Dəyişmək üçün 2 oyunçu seçin)</span>
-            <small id="swapStatus" style="font-size: 0.75rem; color: var(--warning);"></small>
-          </h2>
-
-          <div class="pitch" id="pitchDisplay"></div>
-
-          <h3 style="font-size: 0.85rem; color: var(--accent); margin: 10px 0 6px 0;">Ehtiyat Oyunçular (Substitutes)</h3>
-          <div style="max-height: 160px; overflow-y: auto;">
-            <table>
-              <thead>
-                <tr><th>Ad</th><th>Möq</th><th>OVR</th><th>Qol</th><th>Əməl</th></tr>
-              </thead>
-              <tbody id="benchTable"></tbody>
-            </table>
-          </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="text-gray-300 hover:text-retroGold-400 p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <!-- CANLI MATÇ SİMULYASİYASI LOGU -->
-        <div class="panel">
-          <h2>⏱️ Son Matçın Şərhi (Live Simulation)</h2>
-          <div class="sim-log" id="simLog">
-            <i>Hələ ki matç başlamayıb...</i>
-          </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-vintageCard border-b border-retroGold-500/20 px-4 pt-2 pb-4 space-y-3">
+            <input type="text" id="mobileSearchInput" onkeyup="filterMatchesMobile()" placeholder="Axtarış edin..." 
+                   class="w-full bg-pitch-900 border border-retroGold-500/30 text-xs rounded-lg py-2 px-3 text-gray-200">
+            <a href="#hero" class="block text-retroGold-400 py-1 text-sm font-medium">Ana Səhifə</a>
+            <a href="#matches" class="block text-gray-300 py-1 text-sm font-medium">Matçlar</a>
+            <a href="#tournaments" class="block text-gray-300 py-1 text-sm font-medium">Turnirlər</a>
+            <a href="#legends" class="block text-gray-300 py-1 text-sm font-medium">Əfsanələr</a>
         </div>
-      </div>
+    </header>
 
-      <!-- SAĞ SÜTUN -->
-      <div>
-        <!-- LİQA CƏDVƏLİ -->
-        <div class="panel">
-          <h2>
-            <span>Liqa Cədvəli</span>
-            <span id="leagueNameTag" style="font-size: 0.8rem; color: var(--accent);"></span>
-          </h2>
-          <table>
-            <thead>
-              <tr><th>#</th><th>Klub</th><th>O</th><th>Q</th><th>H</th><th>M</th><th>X</th></tr>
-            </thead>
-            <tbody id="standingsTable"></tbody>
-          </table>
+    <!-- HERO SECTION: Featured Historic Match -->
+    <section id="hero" class="relative py-12 lg:py-16 overflow-hidden border-b border-pitch-700/50 bg-gradient-to-b from-pitch-900 to-vintageDark">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="flex items-center gap-2 mb-4">
+                <span class="bg-retroGold-500/20 text-retroGold-400 text-xs font-semibold px-3 py-1 rounded-full border border-retroGold-500/40 flex items-center gap-1.5">
+                    <i class="fa-solid fa-fire text-amber-500"></i> ƏN MƏŞHUR TARİXİ MATÇ
+                </span>
+                <span class="bg-pitch-700 text-emerald-300 text-xs font-medium px-2.5 py-1 rounded-full border border-emerald-500/30">
+                    <i class="fa-solid fa-wand-magic-sparkles text-xs mr-1"></i> Topaz AI 1080p 60FPS
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Match Details Left Column -->
+                <div class="lg:col-span-7 space-y-6">
+                    <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                        AC Milan <span class="gold-gradient-text">3 - 3</span> Liverpool
+                    </h1>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
+                        <strong class="text-gray-200">25 May 2005 - "İstanbul Möcüzəsi"</strong>. Çempionlar Liqası tarixinin ən dramatik finalı. Milan ilk hissəni 3-0 öndə bitirsə də, Liverpool ikinci hissədə 6 dəqiqəyə hesabı bərabərləşdirdi və penaltilərdə kuboku qazandı.
+                    </p>
+
+                    <!-- Quick Stats Badges -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                        <div class="glass-card p-3 rounded-lg text-center">
+                            <span class="block text-xs text-gray-400">Müddət</span>
+                            <span class="font-bold text-sm text-retroGold-400">20 Dəq Geniş Xülasə</span>
+                        </div>
+                        <div class="glass-card p-3 rounded-lg text-center">
+                            <span class="block text-xs text-gray-400">Stadion</span>
+                            <span class="font-bold text-sm text-gray-200">Atatürk, İstanbul</span>
+                        </div>
+                        <div class="glass-card p-3 rounded-lg text-center">
+                            <span class="block text-xs text-gray-400">Turnir</span>
+                            <span class="font-bold text-sm text-gray-200">UCL Final 2005</span>
+                        </div>
+                        <div class="glass-card p-3 rounded-lg text-center">
+                            <span class="block text-xs text-gray-400">Keyfiyyət</span>
+                            <span class="font-bold text-sm text-emerald-400">HD Re-Mastered</span>
+                        </div>
+                    </div>
+
+                    <!-- Call To Action Button -->
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <button onclick="openVideoModal('AC Milan - Liverpool (2005 Final)', 'https://www.youtube.com/embed/a3L4y3_GfGs', '25 May 2005', 'UCL Final', '3 - 3 (Pen 2-3)')" 
+                                class="bg-gradient-to-r from-retroGold-500 to-retroGold-600 hover:from-retroGold-400 hover:to-retroGold-500 text-vintageDark font-bold px-7 py-3.5 rounded-full shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-3">
+                            <i class="fa-solid fa-play text-lg"></i>
+                            <span>Xülasəni İzlə (20 Dəq)</span>
+                        </button>
+                        <span class="text-xs text-gray-400 flex items-center gap-1">
+                            <i class="fa-solid fa-eye text-retroGold-400"></i> 142.5K izlənmə
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Match Banner / Interactive Preview Card -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative rounded-2xl overflow-hidden border border-retroGold-500/30 shadow-2xl group cursor-pointer" onclick="openVideoModal('AC Milan - Liverpool (2005 Final)', 'https://www.youtube.com/embed/a3L4y3_GfGs', '25 May 2005', 'UCL Final', '3 - 3 (Pen 2-3)')">
+                        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80" alt="Milan vs Liverpool 2005" class="w-full h-72 lg:h-80 object-cover transform group-hover:scale-105 transition-transform duration-500 filter brightness-75">
+                        <div class="absolute inset-0 bg-gradient-to-t from-vintageDark via-transparent to-black/30"></div>
+                        
+                        <!-- Play Icon Overlay -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-16 h-16 rounded-full bg-retroGold-500/90 text-vintageDark flex items-center justify-center text-2xl shadow-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </div>
+                        </div>
+
+                        <!-- Score Badge Overlay -->
+                        <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center bg-vintageDark/80 p-3 rounded-xl border border-white/10 backdrop-blur-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-sm text-white">AC Milan</span>
+                                <span class="bg-red-900/60 text-red-200 text-xs px-2 py-0.5 rounded">ITA</span>
+                            </div>
+                            <span class="font-serif text-lg font-bold text-retroGold-400">3 : 3</span>
+                            <div class="flex items-center gap-2">
+                                <span class="bg-red-800/60 text-red-100 text-xs px-2 py-0.5 rounded">ENG</span>
+                                <span class="font-bold text-sm text-white">Liverpool</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT: MATCH ARCHIVE & FILTERS -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full" id="matches">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+            <div>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-box-archive text-retroGold-500 text-xl"></i> Tarixi Matçlar Arxivi
+                </h2>
+                <p class="text-gray-400 text-xs sm:text-sm mt-1">Dövrünü seç, kecmişin ən maraqlı 15-20 dəqiqəlik keyfiyyətli xülasələrini izlə</p>
+            </div>
+
+            <!-- Era Filter Pills -->
+            <div class="flex flex-wrap gap-2" id="eraFilters">
+                <button onclick="filterByEra('all')" class="era-btn active bg-retroGold-500 text-vintageDark px-4 py-1.5 rounded-full text-xs font-semibold transition-all">Bütün Dövrlar</button>
+                <button onclick="filterByEra('90s')" class="era-btn bg-pitch-800 text-gray-300 hover:text-white hover:bg-pitch-700 px-4 py-1.5 rounded-full text-xs font-medium border border-retroGold-500/20 transition-all">90-lar Qızıl Dövr</button>
+                <button onclick="filterByEra('2000s')" class="era-btn bg-pitch-800 text-gray-300 hover:text-white hover:bg-pitch-700 px-4 py-1.5 rounded-full text-xs font-medium border border-retroGold-500/20 transition-all">2000-lər Əfsanələri</button>
+                <button onclick="filterByEra('2010s')" class="era-btn bg-pitch-800 text-gray-300 hover:text-white hover:bg-pitch-700 px-4 py-1.5 rounded-full text-xs font-medium border border-retroGold-500/20 transition-all">2010-lar Müasir Klassika</button>
+                <button onclick="filterByEra('recent')" class="era-btn bg-pitch-800 text-gray-300 hover:text-white hover:bg-pitch-700 px-4 py-1.5 rounded-full text-xs font-medium border border-retroGold-500/20 transition-all">Son İllər (2020+)</button>
+            </div>
         </div>
 
-        <!-- BOMBARDİRLƏR -->
-        <div class="panel">
-          <h2>📊 Liqa Statistikası (Top Scorers)</h2>
-          <table>
-            <thead>
-              <tr><th>Oyunçu</th><th>Klub</th><th>Qol</th></tr>
-            </thead>
-            <tbody id="topScorersTable"></tbody>
-          </table>
+        <!-- MATCH CARDS GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="matchesGrid">
+            
+            <!-- Match Card 1 (90s) -->
+            <div class="match-card glass-card rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between" data-era="90s" data-search="manchester united bayern munich 1999 ucl final camp nou solskjaer">
+                <div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80" alt="Man Utd vs Bayern 1999" class="w-full h-44 object-cover">
+                        <span class="absolute top-3 left-3 bg-vintageDark/90 text-retroGold-400 text-[11px] font-bold px-2.5 py-1 rounded-md border border-retroGold-500/30">
+                            1999 | 90-lar
+                        </span>
+                        <span class="absolute top-3 right-3 bg-emerald-950/90 text-emerald-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-emerald-500/40">
+                            Topaz 1080p
+                        </span>
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded font-mono">
+                            18:45 Dəq
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-3">
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span><i class="fa-solid fa-trophy text-retroGold-500 mr-1"></i> UEFA Çempionlar Liqası Finalı</span>
+                            <span>26 May 1999</span>
+                        </div>
+
+                        <h3 class="font-bold text-base text-white hover:text-retroGold-400 transition-colors">
+                            Manchester United 2 - 1 Bayern Munich
+                        </h3>
+
+                        <p class="text-xs text-gray-400 line-clamp-2">
+                            Futbol tarixinin ən gözlənilməz geridönüşü. Əlavə olunmuş vaxtda 2 qol vuran Qırmızı Şeytanlar trebl etdi.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0 border-t border-white/5 mt-2 flex items-center justify-between">
+                    <span class="text-[11px] text-gray-400"><i class="fa-solid fa-location-dot text-retroGold-500 mr-1"></i> Camp Nou, Barselona</span>
+                    <button onclick="openVideoModal('Manchester United - Bayern Munich (1999)', 'https://www.youtube.com/embed/P-XsRJU-LGo', '26 May 1999', 'UCL Final 1999', '2 - 1')" 
+                            class="bg-pitch-700 hover:bg-retroGold-500 hover:text-vintageDark text-retroGold-400 text-xs font-semibold px-3.5 py-2 rounded-lg transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-play text-xs"></i> İzlə
+                    </button>
+                </div>
+            </div>
+
+            <!-- Match Card 2 (2000s) -->
+            <div class="match-card glass-card rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between" data-era="2000s" data-search="real madrid bayer leverkusen 2002 zidane volley ucl final">
+                <div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=600&q=80" alt="Real Madrid vs Leverkusen 2002" class="w-full h-44 object-cover">
+                        <span class="absolute top-3 left-3 bg-vintageDark/90 text-retroGold-400 text-[11px] font-bold px-2.5 py-1 rounded-md border border-retroGold-500/30">
+                            2002 | 2000-lər
+                        </span>
+                        <span class="absolute top-3 right-3 bg-emerald-950/90 text-emerald-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-emerald-500/40">
+                            AI Enhanced 60fps
+                        </span>
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded font-mono">
+                            15:20 Dəq
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-3">
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span><i class="fa-solid fa-trophy text-retroGold-500 mr-1"></i> UCL Final</span>
+                            <span>15 May 2002</span>
+                        </div>
+
+                        <h3 class="font-bold text-base text-white hover:text-retroGold-400 transition-colors">
+                            Real Madrid 2 - 1 Bayer Leverkusen
+                        </h3>
+
+                        <p class="text-xs text-gray-400 line-clamp-2">
+                            Zinedine Zidanın sol ayaqla vurduğu möhtəşəm "vole" qolu və İker Kasilyasın əvəzedilməz qurtarışları.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0 border-t border-white/5 mt-2 flex items-center justify-between">
+                    <span class="text-[11px] text-gray-400"><i class="fa-solid fa-location-dot text-retroGold-500 mr-1"></i> Hampden Park, Qlazqo</span>
+                    <button onclick="openVideoModal('Real Madrid - Bayer Leverkusen (2002)', 'https://www.youtube.com/embed/P-XsRJU-LGo', '15 May 2002', 'UCL Final', '2 - 1')" 
+                            class="bg-pitch-700 hover:bg-retroGold-500 hover:text-vintageDark text-retroGold-400 text-xs font-semibold px-3.5 py-2 rounded-lg transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-play text-xs"></i> İzlə
+                    </button>
+                </div>
+            </div>
+
+            <!-- Match Card 3 (2010s) -->
+            <div class="match-card glass-card rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between" data-era="2010s" data-search="barcelona psg 2017 remontada 6-1 messi neymar ucl Sergi roberto">
+                <div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=600&q=80" alt="Barcelona vs PSG 2017" class="w-full h-44 object-cover">
+                        <span class="absolute top-3 left-3 bg-vintageDark/90 text-retroGold-400 text-[11px] font-bold px-2.5 py-1 rounded-md border border-retroGold-500/30">
+                            2017 | 2010-lar
+                        </span>
+                        <span class="absolute top-3 right-3 bg-blue-950/90 text-blue-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-blue-500/40">
+                            Full HD Original
+                        </span>
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded font-mono">
+                            22:10 Dəq
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-3">
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span><i class="fa-solid fa-trophy text-retroGold-500 mr-1"></i> UCL 1/8 Final</span>
+                            <span>8 Mart 2017</span>
+                        </div>
+
+                        <h3 class="font-bold text-base text-white hover:text-retroGold-400 transition-colors">
+                            Barcelona 6 - 1 Paris SG ("Remontada")
+                        </h3>
+
+                        <p class="text-xs text-gray-400 line-clamp-2">
+                            İlk oyunda 0-4 uduzan Barselona, cavab matçında 95-ci dəqiqədə Sergi Robertonun qolu ilə möcüzəyə imza atdı.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0 border-t border-white/5 mt-2 flex items-center justify-between">
+                    <span class="text-[11px] text-gray-400"><i class="fa-solid fa-location-dot text-retroGold-500 mr-1"></i> Camp Nou, Barselona</span>
+                    <button onclick="openVideoModal('Barcelona - PSG (2017 Remontada)', 'https://www.youtube.com/embed/P-XsRJU-LGo', '8 Mart 2017', 'UCL 1/8 Final', '6 - 1')" 
+                            class="bg-pitch-700 hover:bg-retroGold-500 hover:text-vintageDark text-retroGold-400 text-xs font-semibold px-3.5 py-2 rounded-lg transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-play text-xs"></i> İzlə
+                    </button>
+                </div>
+            </div>
+
+            <!-- Match Card 4 (90s) -->
+            <div class="match-card glass-card rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between" data-era="90s" data-search="brazil france 1998 world cup final zidane ronaldo">
+                <div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?auto=format&fit=crop&w=600&q=80" alt="Brazil vs France 1998" class="w-full h-44 object-cover">
+                        <span class="absolute top-3 left-3 bg-vintageDark/90 text-retroGold-400 text-[11px] font-bold px-2.5 py-1 rounded-md border border-retroGold-500/30">
+                            1998 | 90-lar
+                        </span>
+                        <span class="absolute top-3 right-3 bg-emerald-950/90 text-emerald-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-emerald-500/40">
+                            Topaz 1080p
+                        </span>
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded font-mono">
+                            16:40 Dəq
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-3">
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span><i class="fa-solid fa-globe text-retroGold-500 mr-1"></i> Dünya Çempionatı Finalı</span>
+                            <span>12 İyul 1998</span>
+                        </div>
+
+                        <h3 class="font-bold text-base text-white hover:text-retroGold-400 transition-colors">
+                            Fransa 3 - 0 Braziliya
+                        </h3>
+
+                        <p class="text-xs text-gray-400 line-clamp-2">
+                            Zidanın başla vurduğu 2 qol və Fransanın doğma meydanda ilk Dünya Çempionluğu zəfəri.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0 border-t border-white/5 mt-2 flex items-center justify-between">
+                    <span class="text-[11px] text-gray-400"><i class="fa-solid fa-location-dot text-retroGold-500 mr-1"></i> Stade de France, Paris</span>
+                    <button onclick="openVideoModal('Fransa - Braziliya (1998 Final)', 'https://www.youtube.com/embed/P-XsRJU-LGo', '12 İyul 1998', 'Dünya Çempionatı', '3 - 0')" 
+                            class="bg-pitch-700 hover:bg-retroGold-500 hover:text-vintageDark text-retroGold-400 text-xs font-semibold px-3.5 py-2 rounded-lg transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-play text-xs"></i> İzlə
+                    </button>
+                </div>
+            </div>
+
+            <!-- Match Card 5 (2000s) -->
+            <div class="match-card glass-card rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between" data-era="2000s" data-search="brazil germany 2002 world cup final ronaldo nazario">
+                <div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80" alt="Brazil vs Germany 2002" class="w-full h-44 object-cover">
+                        <span class="absolute top-3 left-3 bg-vintageDark/90 text-retroGold-400 text-[11px] font-bold px-2.5 py-1 rounded-md border border-retroGold-500/30">
+                            2002 | 2000-lər
+                        </span>
+                        <span class="absolute top-3 right-3 bg-emerald-950/90 text-emerald-400 text-[10px] font-semibold px-2 py-0.5 rounded border border-emerald-500/40">
+                            AI Enhanced
+                        </span>
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded font-mono">
+                            19:10 Dəq
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-3">
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span><i class="fa-solid fa-globe text-retroGold-500 mr-1"></i> FIFA Dünya Çempionatı</span>
+                            <span>30 İyun 2002</span>
+                        </div>
+
+                        <h3 class="font-bold text-base text-white hover:text-retroGold-400 transition-colors">
+                            Braziliya 2 - 0 Almaniya
+                        </h3>
+
+                        <p class="text-xs text-gray-400 line-clamp-2">
+                            Ronaldo Nazario (Fenomeno) Oliver Kanın qapısına 2 qol vuraraq Braziliyaya 5-ci dünya kubokunu qazandırdı.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0 border-t border-white/5 mt-2 flex items-center justify-between">
+                    <span class="text-[11px] text-gray-400"><i class="fa-solid fa-location-dot text-retroGold-500 mr-1"></i> Yokohama, Yaponiya</span>
+                    <button onclick="openVideoModal('Braziliya - Almaniya (2002 Final)', 'https://www.youtube.com/embed/P-XsRJU-LGo', '30 İyun 2002', 'DÇ Final', '2 - 0')" 
+                            class="bg-pitch-700 hover:bg-retroGold-500 hover:text-vintageDark text-retroGold-400 text-xs font-semibold px-3.5 py-2 rounded-lg transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-play text-xs"></i> İzlə
+                    </button>
+                </div>
+            </div>
+
+            <!-- Match Card 6 (Recent 2020+) -->
+            <div class="match-card glass-card rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between" data-era="recent" data-search="argentina france 2022 world cup final messi mbappe qatar">
+                <div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80" alt="Argentina vs France 2022" class="w-full h-44 object-cover">
+                        <span class="absolute top-3 left-3 bg-vintageDark/90 text-retroGold-400 text-[11px] font-bold px-2.5 py-1 rounded-md border border-retroGold-500/30">
+                            2022 | Son İllər
+                        </span>
+                        <span class="absolute top-3 right-3 bg-purple-950/90 text-purple-300 text-[10px] font-semibold px-2 py-0.5 rounded border border-purple-500/40">
+                            4K Ultra HD
+                        </span>
+                        <div class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] px-2 py-0.5 rounded font-mono">
+                            25:00 Dəq
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-3">
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span><i class="fa-solid fa-trophy text-retroGold-500 mr-1"></i> DÇ Final 2022</span>
+                            <span>18 Dekabr 2022</span>
+                        </div>
+
+                        <h3 class="font-bold text-base text-white hover:text-retroGold-400 transition-colors">
+                            Argentina 3 - 3 Fransa (Pen 4-2)
+                        </h3>
+
+                        <p class="text-xs text-gray-400 line-clamp-2">
+                            Futbol tarixinin ən böyük finalı: Messi dubl etdi, Mbappə het-trik etdi, penaltilərdə Argentina qalib gəldi.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0 border-t border-white/5 mt-2 flex items-center justify-between">
+                    <span class="text-[11px] text-gray-400"><i class="fa-solid fa-location-dot text-retroGold-500 mr-1"></i> Lusail, Qətər</span>
+                    <button onclick="openVideoModal('Argentina - Fransa (2022 Final)', 'https://www.youtube.com/embed/P-XsRJU-LGo', '18 Dekabr 2022', 'DÇ Final', '3 - 3 (Pen 4-2)')" 
+                            class="bg-pitch-700 hover:bg-retroGold-500 hover:text-vintageDark text-retroGold-400 text-xs font-semibold px-3.5 py-2 rounded-lg transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-play text-xs"></i> İzlə
+                    </button>
+                </div>
+            </div>
+
         </div>
-      </div>
+
+        <!-- CLASSIC TOURNAMENTS & LEGENDS SECTION -->
+        <section id="tournaments" class="mt-20 border-t border-pitch-700/50 pt-12">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <h2 class="font-serif text-3xl font-bold text-white">Xüsusi Kolleksiyalar və Turnirlər</h2>
+                <p class="text-gray-400 text-xs sm:text-sm mt-2">Futbol tarixinin ikonik yarışları və əfsanəvi futbolçuların xüsusi matç arxivləri</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="legends">
+                <!-- Collection Card 1 -->
+                <div class="glass-card p-5 rounded-2xl text-center group cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-retroGold-500/10 text-retroGold-400 flex items-center justify-center text-xl group-hover:bg-retroGold-500 group-hover:text-vintageDark transition-colors">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">El Clásico Klassikləri</h4>
+                    <span class="text-[11px] text-gray-400 block mt-1">Real Madrid vs Barcelona</span>
+                    <span class="inline-block mt-3 text-[10px] bg-pitch-700 text-retroGold-400 px-2 py-0.5 rounded-full">24 Matç</span>
+                </div>
+
+                <!-- Collection Card 2 -->
+                <div class="glass-card p-5 rounded-2xl text-center group cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-retroGold-500/10 text-retroGold-400 flex items-center justify-center text-xl group-hover:bg-retroGold-500 group-hover:text-vintageDark transition-colors">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Ronaldinho Era</h4>
+                    <span class="text-[11px] text-gray-400 block mt-1">Sehrbazın ən yaxşı matçları</span>
+                    <span class="inline-block mt-3 text-[10px] bg-pitch-700 text-retroGold-400 px-2 py-0.5 rounded-full">18 Matç</span>
+                </div>
+
+                <!-- Collection Card 3 -->
+                <div class="glass-card p-5 rounded-2xl text-center group cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-retroGold-500/10 text-retroGold-400 flex items-center justify-center text-xl group-hover:bg-retroGold-500 group-hover:text-vintageDark transition-colors">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">UCL Finalları</h4>
+                    <span class="text-[11px] text-gray-400 block mt-1">1992 - 2024 Arası</span>
+                    <span class="inline-block mt-3 text-[10px] bg-pitch-700 text-retroGold-400 px-2 py-0.5 rounded-full">32 Matç</span>
+                </div>
+
+                <!-- Collection Card 4 -->
+                <div class="glass-card p-5 rounded-2xl text-center group cursor-pointer hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-retroGold-500/10 text-retroGold-400 flex items-center justify-center text-xl group-hover:bg-retroGold-500 group-hover:text-vintageDark transition-colors">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-white">Premier League 2000s</h4>
+                    <span class="text-[11px] text-gray-400 block mt-1">Arsenal Unbeatables & Utd</span>
+                    <span class="inline-block mt-3 text-[10px] bg-pitch-700 text-retroGold-400 px-2 py-0.5 rounded-full">15 Matç</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- VIDEO PLAYER MODAL -->
+    <div id="videoModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 modal-blur p-4 sm:p-6">
+        <div class="glass-card w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl border border-retroGold-500/40 relative flex flex-col">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-4 border-b border-pitch-700 bg-pitch-900/90">
+                <div>
+                    <h3 id="modalTitle" class="font-bold text-base sm:text-lg text-white">Matç Video Xülasəsi</h3>
+                    <div class="flex items-center gap-3 text-xs text-gray-400 mt-0.5">
+                        <span id="modalDate">Tarix</span>
+                        <span>•</span>
+                        <span id="modalTournament" class="text-retroGold-400">Turnir</span>
+                        <span>•</span>
+                        <span id="modalScore" class="font-bold text-emerald-400">Hesab</span>
+                    </div>
+                </div>
+                <button onclick="closeVideoModal()" class="w-8 h-8 rounded-full bg-pitch-700 text-gray-300 hover:text-white hover:bg-red-900/60 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Responsive Video Iframe Container -->
+            <div class="relative aspect-video w-full bg-black">
+                <iframe id="modalIframe" class="w-full h-full border-0" allow="autoplay; encrypted-media" allowfullscreen src=""></iframe>
+            </div>
+
+            <!-- Modal Footer / Quality Info -->
+            <div class="p-4 bg-vintageDark/90 flex flex-wrap items-center justify-between gap-2 border-t border-pitch-700/50">
+                <div class="flex items-center gap-2 text-xs text-gray-400">
+                    <span class="bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30">HD Re-mastered</span>
+                    <span>Format: 15-20 Dəqiqəlik Xülasə</span>
+                </div>
+                <div class="text-xs text-gray-400">
+                    Mənbə: <span class="text-retroGold-400">RetroPitch Cloud Archive</span>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </div>
 
-  <script>
-    // GENİŞLƏNDİRİLMİŞ TAM DATA BAZASI
-    const db = {
-      countries: [
-        {
-          id: "AZ", name: "Azərbaycan", league: "Premyer Liqa",
-          teams: [
-            { id: 101, name: "Qarabağ", budget: 15, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("Qarabağ", 75) },
-            { id: 102, name: "Neftçi", budget: 8, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("Neftçi", 72) },
-            { id: 103, name: "Sabah", budget: 7, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("Sabah", 71) },
-            { id: 104, name: "Zirə", budget: 5, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("Zirə", 70) },
-            { id: 105, name: "Sumqayıt", budget: 4, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("Sumqayıt", 68) },
-            { id: 106, name: "Araz-Naxçıvan", budget: 4, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("Araz", 67) }
-          ]
-        },
-        {
-          id: "TR", name: "Türkiyə", league: "Süper Lig",
-          teams: [
-            { id: 201, name: "Beşiktaş", budget: 35, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("BJK", 79) },
-            { id: 202, name: "Galatasaray", budget: 50, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("GS", 81) },
-            { id: 203, name: "Fenerbahçe", budget: 48, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("FB", 81) },
-            { id: 204, name: "Trabzonspor", budget: 20, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("TS", 76) },
-            { id: 205, name: "Başakşehir", budget: 15, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("IBFK", 74) },
-            { id: 206, name: "Samsunspor", budget: 10, points: 0, played: 0, won: 0, drawn: 0, lost: 0, squad: generateSquad("Samsun", 72) }
-          ]
-        }
-      ]
-    };
+    <!-- FOOTER -->
+    <footer class="bg-pitch-900 border-t border-pitch-700/50 py-8 text-center text-xs text-gray-500 mt-12">
+        <div class="max-w-7xl mx-auto px-4 space-y-3">
+            <div class="flex justify-center items-center gap-2">
+                <span class="font-serif text-lg font-bold text-white">RETRO<span class="gold-gradient-text">PITCH</span></span>
+            </div>
+            <p class="max-w-md mx-auto text-gray-400">Tarixi futbol matçlarının keyfiyyətli xülasə arxivi. Bütün hüquqlar qorunur.</p>
+            <p class="text-[10px] text-gray-600">Bu platforma sadəcə tədris və arxiv məqsədləri üçün dizayn edilmişdir.</p>
+        </div>
+    </footer>
 
-    function generateSquad(prefix, baseRating) {
-      const positions = ["GK", "RB", "CB", "CB", "LB", "CDM", "CM", "CAM", "RW", "LW", "ST", "GK", "CB", "CM", "ST"];
-      return positions.map((pos, idx) => ({
-        id: Math.floor(Math.random() * 100000),
-        name: `${prefix} Oyuncu ${idx + 1}`,
-        pos: pos,
-        rating: baseRating + Math.floor(Math.random() * 5) - 2,
-        goals: 0,
-        inStarting11: idx < 11
-      }));
-    }
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Toggle Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
 
-    let userCountry = null;
-    let userTeam = null;
-    let selectedForSwap = null;
-    let currentMatchWeek = 1;
-    let matchTypes = ["league", "ucl", "league", "uel", "league", "uecl"]; // Turnir dövrü
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-    function updateTeamDropdown() {
-      const cId = document.getElementById("selectCountry").value;
-      const country = db.countries.find(c => c.id === cId);
-      const select = document.getElementById("selectTeam");
-      select.innerHTML = "";
-      country.teams.forEach(t => {
-        select.innerHTML += `<option value="${t.id}">${t.name}</option>`;
-      });
-    }
+        // Era Filter Buttons Functionality
+        function filterByEra(era) {
+            const cards = document.querySelectorAll('.match-card');
+            const btns = document.querySelectorAll('.era-btn');
 
-    function startGame() {
-      const cId = document.getElementById("selectCountry").value;
-      const tId = parseInt(document.getElementById("selectTeam").value);
+            // Update Active Button Styling
+            btns.forEach(btn => {
+                btn.classList.remove('bg-retroGold-500', 'text-vintageDark', 'font-semibold');
+                btn.classList.add('bg-pitch-800', 'text-gray-300');
+            });
 
-      userCountry = db.countries.find(c => c.id === cId);
-      userTeam = userCountry.teams.find(t => t.id === tId);
+            event.target.classList.remove('bg-pitch-800', 'text-gray-300');
+            event.target.classList.add('bg-retroGold-500', 'text-vintageDark', 'font-semibold');
 
-      document.getElementById("selectionScreen").style.display = "none";
-      document.getElementById("gameScreen").style.display = "block";
-      document.getElementById("leagueNameTag").innerText = userCountry.league;
-
-      updateMatchEnvironment();
-      updateUI();
-    }
-
-    // TURNİRƏ UYGUN DİZAYN VƏ ARXA FONUN AVTOMATİK DƏYİŞMƏSİ
-    function updateMatchEnvironment() {
-      const currentType = matchTypes[(currentMatchWeek - 1) % matchTypes.length];
-      document.body.className = `type-${currentType}`;
-
-      const infoBar = document.getElementById("matchInfoBar");
-      if (currentType === "ucl") {
-        infoBar.innerText = `⭐ Növbəti Matç: UEFA Champions League (Mərhələ 1)`;
-      } else if (currentType === "uel") {
-        infoBar.innerText = `🟠 Növbəti Matç: UEFA Europa League (Mərhələ 1)`;
-      } else if (currentType === "uecl") {
-        infoBar.innerText = `🟢 Növbəti Matç: UEFA Conference League (Mərhələ 1)`;
-      } else {
-        infoBar.innerText = `🏆 Növbəti Matç: ${userCountry.league} (Həftə ${currentMatchWeek})`;
-      }
-    }
-
-    // TAKTİKA VƏ SWAP (YER DƏYİŞMƏ) MƏNTİQİ
-    function handleSwap(player) {
-      const status = document.getElementById("swapStatus");
-      if (!selectedForSwap) {
-        selectedForSwap = player;
-        status.innerText = `[${player.name}] seçildi... Növbəti oyunçunu seçin.`;
-        renderPitch();
-      } else {
-        if (selectedForSwap.id === player.id) {
-          selectedForSwap = null;
-          status.innerText = "";
-          renderPitch();
-          return;
+            // Show/Hide Cards based on era
+            cards.forEach(card => {
+                const cardEra = card.getAttribute('data-era');
+                if (era === 'all' || cardEra === era) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
 
-        // Statusları swap et
-        let temp = selectedForSwap.inStarting11;
-        selectedForSwap.inStarting11 = player.inStarting11;
-        player.inStarting11 = temp;
+        // Live Search Input Filter
+        function filterMatches() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.match-card');
 
-        selectedForSwap = null;
-        status.innerText = "Yerlər dəyişdirildi!";
-        setTimeout(() => status.innerText = "", 2000);
-
-        updateUI();
-      }
-    }
-
-    function renderPitch() {
-      const pitch = document.getElementById("pitchDisplay");
-      pitch.innerHTML = "";
-
-      const starting11 = userTeam.squad.filter(p => p.inStarting11);
-
-      const rowFW = document.createElement("div"); rowFW.className = "pitch-row";
-      const rowMF = document.createElement("div"); rowMF.className = "pitch-row";
-      const rowDF = document.createElement("div"); rowDF.className = "pitch-row";
-      const rowGK = document.createElement("div"); rowGK.className = "pitch-row";
-
-      starting11.forEach(p => {
-        const card = document.createElement("div");
-        const isSelected = selectedForSwap && selectedForSwap.id === p.id ? "selected" : "";
-        card.className = `player-card ${isSelected}`;
-        card.innerHTML = `<b>${p.name}</b><br><small>${p.pos} | ${p.rating}</small>`;
-        card.onclick = () => handleSwap(p);
-
-        if (["ST", "LW", "RW"].includes(p.pos)) rowFW.appendChild(card);
-        else if (["CAM", "CM", "CDM"].includes(p.pos)) rowMF.appendChild(card);
-        else if (p.pos === "GK") rowGK.appendChild(card);
-        else rowDF.appendChild(card);
-      });
-
-      pitch.appendChild(rowFW); pitch.appendChild(rowMF); pitch.appendChild(rowDF); pitch.appendChild(rowGK);
-    }
-
-    function renderBench() {
-      const tbody = document.getElementById("benchTable");
-      tbody.innerHTML = "";
-      const bench = userTeam.squad.filter(p => !p.inStarting11);
-
-      bench.forEach(p => {
-        const isSelected = selectedForSwap && selectedForSwap.id === p.id ? "style='background:rgba(239, 68, 68, 0.3)'" : "";
-        tbody.innerHTML += `
-          <tr ${isSelected}>
-            <td><b>${p.name}</b></td>
-            <td>${p.pos}</td>
-            <td>${p.rating}</td>
-            <td>${p.goals}</td>
-            <td><button class="btn" onclick="handleSwap(userTeam.squad.find(x => x.id === ${p.id}))">Dəyiş</button></td>
-          </tr>
-        `;
-      });
-    }
-
-    // AYRINTILI MİNUT-BY-MİNUT CANLI SİMULYASİYA
-    function playMatchSimulation() {
-      const simLog = document.getElementById("simLog");
-      simLog.innerHTML = "";
-
-      // Rəqib tap
-      const opponents = userCountry.teams.filter(t => t.id !== userTeam.id);
-      const opponent = opponents[Math.floor(Math.random() * opponents.length)];
-
-      let userGoals = 0;
-      let oppGoals = 0;
-
-      let minute = 0;
-      const interval = setInterval(() => {
-        minute += Math.floor(Math.random() * 15) + 5;
-        if (minute > 90) minute = 90;
-
-        // Qol şansı
-        if (Math.random() < 0.35) {
-          if (Math.random() > 0.5) {
-            userGoals++;
-            const scorer = userTeam.squad.filter(p => p.inStarting11)[Math.floor(Math.random() * 11)];
-            if(scorer) scorer.goals++;
-            simLog.innerHTML += `<div class="log-item"><b>${minute}' QOLLLL! 🎉</b> ${userTeam.name} - ${scorer?.name || 'Oyunçu'} fərqləndi! (${userGoals}-${oppGoals})</div>`;
-          } else {
-            oppGoals++;
-            simLog.innerHTML += `<div class="log-item" style="border-color:var(--danger)"><b>${minute}' QOL! ⚽</b> ${opponent.name} hesabı dəyişdi! (${userGoals}-${oppGoals})</div>`;
-          }
+            cards.forEach(card => {
+                const searchData = card.getAttribute('data-search').toLowerCase();
+                if (searchData.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
 
-        simLog.scrollTop = simLog.scrollHeight;
+        function filterMatchesMobile() {
+            const query = document.getElementById('mobileSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.match-card');
 
-        if (minute >= 90) {
-          clearInterval(interval);
-          simLog.innerHTML += `<div class="log-item" style="border-color:var(--success)"><b>90' Yekun Hesab: ${userTeam.name} ${userGoals} - ${oppGoals} ${opponent.name}</b></div>`;
-          
-          // Xalları yazmaq
-          userTeam.played++; opponent.played++;
-          if(userGoals > oppGoals) { userTeam.points += 3; userTeam.won++; opponent.lost++; }
-          else if(oppGoals > userGoals) { opponent.points += 3; opponent.won++; userTeam.lost++; }
-          else { userTeam.points++; opponent.points++; userTeam.drawn++; opponent.drawn++; }
-
-          currentMatchWeek++;
-          updateMatchEnvironment();
-          updateUI();
+            cards.forEach(card => {
+                const searchData = card.getAttribute('data-search').toLowerCase();
+                if (searchData.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
-      }, 400);
-    }
 
-    function renderStandings() {
-      const tbody = document.getElementById("standingsTable");
-      const sorted = [...userCountry.teams].sort((a,b) => b.points - a.points);
-      tbody.innerHTML = "";
-      sorted.forEach((t, i) => {
-        const isUser = t.id === userTeam.id ? "style='background: rgba(0,242,254,0.15); color:var(--accent); font-weight:bold;'" : "";
-        tbody.innerHTML += `
-          <tr ${isUser}>
-            <td>${i+1}</td>
-            <td>${t.name}</td>
-            <td>${t.played}</td>
-            <td>${t.won}</td>
-            <td>${t.drawn}</td>
-            <td>${t.lost}</td>
-            <td><b>${t.points}</b></td>
-          </tr>
-        `;
-      });
-    }
+        // Video Player Modal Controls
+        function openVideoModal(title, videoUrl, date, tournament, score) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDate').textContent = date;
+            document.getElementById('modalTournament').textContent = tournament;
+            document.getElementById('modalScore').textContent = score;
+            document.getElementById('modalIframe').src = videoUrl + "?autoplay=1";
+            
+            const modal = document.getElementById('videoModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
 
-    function renderTopScorers() {
-      const tbody = document.getElementById("topScorersTable");
-      let allPlayers = [];
-      userCountry.teams.forEach(t => t.squad.forEach(p => allPlayers.push({ ...p, team: t.name })));
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            document.getElementById('modalIframe').src = "";
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
 
-      const sorted = allPlayers.sort((a,b) => b.goals - a.goals).slice(0, 5);
-      tbody.innerHTML = sorted.map(p => `<tr><td>${p.name}</td><td>${p.team}</td><td><b>${p.goals} ⚽</b></td></tr>`).join('');
-    }
+        // Close modal when clicking outside content box
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideoModal();
+            }
+        });
+    </script>
 
-    function updateUI() {
-      renderPitch();
-      renderBench();
-      renderStandings();
-      renderTopScorers();
-    }
-
-    updateTeamDropdown();
-  </script>
 </body>
 </html>
