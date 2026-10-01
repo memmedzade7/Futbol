@@ -31,7 +31,6 @@
         }
     </script>
     <style>
-        /* Futbol Stadiyumu Ve Yaşıl Ot Örtüyü Fonu */
         body {
             transition: all 0.5s ease;
             background-color: #03120a;
@@ -44,7 +43,6 @@
             color: #f9fafb;
         }
 
-        /* Retro Dövrü (1990-2009) - Nostalji Qızılı İşıqlandırma */
         body.theme-retro {
             background-image: 
                 radial-gradient(circle at 50% -10%, rgba(234, 179, 8, 0.3) 0%, transparent 60%),
@@ -53,7 +51,6 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         }
 
-        /* Klassik Dövr (2010-2019) - Dərin Göy Stadiyum Fonu */
         body.theme-classic {
             background-image: 
                 radial-gradient(circle at 50% -10%, rgba(14, 165, 233, 0.3) 0%, transparent 60%),
@@ -62,7 +59,6 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         }
 
-        /* Günümüz Dövrü (2020+) - Modern Neon Purple Fon */
         body.theme-modern {
             background-image: 
                 radial-gradient(circle at 50% -10%, rgba(168, 85, 247, 0.3) 0%, transparent 60%),
@@ -103,12 +99,9 @@
     <header class="sticky top-0 z-40 bg-pitch-950/85 backdrop-blur-xl border-b border-pitch-accent/20">
         <div class="max-w-[1400px] mx-auto px-4 py-3 flex flex-col gap-3">
             
-            <!-- Üst Sıra: Logo, Menyu Və Sağ Hissə -->
             <div class="flex items-center justify-between gap-4">
                 
-                <!-- Logo & Nav Tabs (Tam Sola Sıxlaşdırıldı) -->
                 <div class="flex items-center space-x-6 sm:space-x-8">
-                    <!-- Brand Logo -->
                     <a href="#" class="flex items-center space-x-3 group">
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pitch-accent via-emerald-400 to-pitch-gold p-[1px] shadow-lg shadow-pitch-accent/20 group-hover:scale-105 transition-transform">
                             <div class="w-full h-full bg-pitch-950 rounded-[11px] flex items-center justify-center">
@@ -125,7 +118,6 @@
                         </div>
                     </a>
 
-                    <!-- Navigation Tabs -->
                     <nav class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider pl-4 border-l border-white/10">
                         <a href="#matches" class="nav-link active text-white hover:text-pitch-accent transition-colors py-1 flex items-center gap-2 relative">
                             <i data-lucide="play-circle" class="w-4 h-4 text-pitch-accent"></i> Matçlar
@@ -142,14 +134,11 @@
                     </nav>
                 </div>
 
-                <!-- Sağ Tərəf: Axtarış Və Yaradıcı -->
                 <div class="flex flex-col items-end gap-1 ml-auto">
-                    <!-- Yaradıcı İmzası -->
                     <div class="text-[11px] font-bold text-pitch-gold flex items-center gap-1">
                         <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pitch-accent"></i> Yaradıcı: <span class="text-white">Rəsul Məmmədzadə</span>
                     </div>
 
-                    <!-- Axtarış Zolağı -->
                     <div class="relative w-40 sm:w-64">
                         <input type="text" id="searchInput" oninput="filterMatches()" placeholder="Matç, komanda, il..." 
                             class="w-full bg-pitch-900/90 text-xs sm:text-sm text-white placeholder-slate-400 font-semibold rounded-xl pl-9 pr-3 py-1.5 border border-pitch-accent/30 focus:outline-none focus:border-pitch-accent focus:ring-1 focus:ring-pitch-accent transition-all">
@@ -159,7 +148,6 @@
 
             </div>
 
-            <!-- Alt Sıra: Mərkəzdə Yuxarıya Yerləşdirilmiş DÖVR TABLARI -->
             <div class="flex items-center justify-center border-t border-white/5 pt-2">
                 <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 bg-pitch-900/90 p-1.5 rounded-2xl border border-pitch-accent/20" id="eraFilters">
                     <button onclick="setEraFilter('all')" class="era-btn active-era px-4 py-1.5 rounded-xl text-xs font-black bg-gradient-to-r from-pitch-accent to-emerald-400 text-black shadow-lg transition-all">BÜTÜN MATÇLAR</button>
@@ -175,22 +163,6 @@
     <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
-        <!-- Hero Section -->
-        <div class="relative rounded-3xl overflow-hidden mb-12 border border-pitch-accent/30 bg-gradient-to-r from-pitch-950 via-pitch-900 to-pitch-950 p-8 sm:p-12 shadow-2xl">
-            <div class="absolute -top-20 -right-20 w-96 h-96 bg-pitch-accent/15 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="relative z-10 max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold bg-pitch-accent/10 text-pitch-accent border border-pitch-accent/30 mb-4">
-                    <i data-lucide="trophy" class="w-3.5 h-3.5"></i> ƏFSANƏVİ STADİON ARXİVİ
-                </div>
-                <h1 class="text-3xl sm:text-6xl font-black tracking-tight leading-none mb-4 uppercase">
-                    TARİXİN ƏN DƏHŞƏTLİ <br><span class="bg-gradient-to-r from-pitch-accent via-emerald-300 to-pitch-gold bg-clip-text text-transparent">FUTBOL MÜHARİBƏLƏRİ</span>
-                </h1>
-                <p class="text-slate-300 text-sm sm:text-base font-semibold leading-relaxed">
-                    90-cı illər, 2000-ci illərin əfsanələri və günümüzün ən həyəcanlı matçları — 15-20 dəqiqəlik yüksək keyfiyyətli xüsusi xülasələrlə RM MATCH-də.
-                </p>
-            </div>
-        </div>
-
         <!-- Section Title -->
         <div class="flex items-center justify-between border-b border-pitch-accent/20 pb-3 mb-8">
             <h2 class="text-xl sm:text-2xl font-black uppercase text-white flex items-center gap-2">
@@ -236,7 +208,6 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // 20 Əfsanəvi Matçın Genişləndirilmiş Bazası
         const matches = [
             {
                 id: 1,
@@ -245,9 +216,9 @@
                 year: 2005,
                 era: "retro",
                 duration: "18 Dəq İcmal",
-                quality: "1080p HD (Restored)",
+                quality: "1080p HD",
                 image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                videoUrl: "https://www.youtube.com/embed/m6WP8y9S3m4"
             },
             {
                 id: 2,
@@ -258,7 +229,7 @@
                 duration: "20 Dəq İcmal",
                 quality: "4K 60FPS",
                 image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                videoUrl: "https://www.youtube.com/embed/1v0s1Z9vQ4M"
             },
             {
                 id: 3,
@@ -269,7 +240,7 @@
                 duration: "15 Dəq İcmal",
                 quality: "1080p HD",
                 image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                videoUrl: "https://www.youtube.com/embed/4096SlyD2I4"
             },
             {
                 id: 4,
@@ -280,7 +251,7 @@
                 duration: "22 Dəq İcmal",
                 quality: "1080p HD",
                 image: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                videoUrl: "https://www.youtube.com/embed/N3f_XjO1v0k"
             },
             {
                 id: 5,
@@ -291,7 +262,7 @@
                 duration: "25 Dəq İcmal",
                 quality: "4K Ultra HD",
                 image: "https://images.unsplash.com/photo-1560272564-6694e074a480?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                videoUrl: "https://www.youtube.com/embed/msc_Tq6P7xI"
             },
             {
                 id: 6,
@@ -300,163 +271,9 @@
                 year: 1999,
                 era: "retro",
                 duration: "16 Dəq İcmal",
-                quality: "1080p HD (AI Remastered)",
+                quality: "1080p HD",
                 image: "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 7,
-                title: "Barcelona vs Real Madrid 5-0",
-                tournament: "La Liga (El Clasico)",
-                year: 2010,
-                era: "classic",
-                duration: "19 Dəq İcmal",
-                quality: "1080p 60FPS",
-                image: "https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 8,
-                title: "Real Madrid vs Manchester City 3-1 (Uz. 1-0)",
-                tournament: "UEFA Çempionlar Liqası Yarımfinal",
-                year: 2022,
-                era: "modern",
-                duration: "21 Dəq İcmal",
-                quality: "4K Ultra HD",
-                image: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 9,
-                title: "İspaniya vs Hollandiya 1-0 (Uz.)",
-                tournament: "Dünya Çempionatı Finalı",
-                year: 2010,
-                era: "classic",
-                duration: "20 Dəq İcmal",
-                quality: "1080p HD",
-                image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 10,
-                title: "Liverpool vs Barcelona 4-0",
-                tournament: "UEFA Çempionlar Liqası Yarımfinal",
-                year: 2019,
-                era: "classic",
-                duration: "18 Dəq İcmal",
-                quality: "4K 60FPS",
-                image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 11,
-                title: "Braziliya vs İtaliya 0-2 (Pen 3-2)",
-                tournament: "Dünya Çempionatı Finalı",
-                year: 1994,
-                era: "retro",
-                duration: "15 Dəq İcmal",
-                quality: "1080p (AI Remastered)",
-                image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 12,
-                title: "Bayern Munich vs Barcelona 8-2",
-                tournament: "UEFA Çempionlar Liqası 1/4 Final",
-                year: 2020,
-                era: "modern",
-                duration: "17 Dəq İcmal",
-                quality: "4K Ultra HD",
-                image: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 13,
-                title: "Real Madrid vs Juventus 4-1",
-                tournament: "UEFA Çempionlar Liqası Finalı",
-                year: 2017,
-                era: "classic",
-                duration: "19 Dəq İcmal",
-                quality: "1080p HD",
-                image: "https://images.unsplash.com/photo-1560272564-6694e074a480?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 14,
-                title: "Fransa vs Braziliya 3-0",
-                tournament: "Dünya Çempionatı Finalı",
-                year: 1998,
-                era: "retro",
-                duration: "16 Dəq İcmal",
-                quality: "1080p (Restored)",
-                image: "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 15,
-                title: "Chelsea vs Bayern Munich 1-1 (Pen 4-3)",
-                tournament: "UEFA Çempionlar Liqası Finalı",
-                year: 2012,
-                era: "classic",
-                duration: "20 Dəq İcmal",
-                quality: "1080p 60FPS",
-                image: "https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 16,
-                title: "Manchester City vs QPR 3-2",
-                tournament: "Premier League (Çempionluq Matçı)",
-                year: 2012,
-                era: "classic",
-                duration: "15 Dəq İcmal",
-                quality: "1080p HD",
-                image: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 17,
-                title: "İspaniya vs İtaliya 4-0",
-                tournament: "EURO 2012 Finalı",
-                year: 2012,
-                era: "classic",
-                duration: "18 Dəq İcmal",
-                quality: "1080p HD",
-                image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 18,
-                title: "Arsenal vs Barcelona 2-1",
-                tournament: "UEFA Çempionlar Liqası 1/8 Final",
-                year: 2011,
-                era: "classic",
-                duration: "16 Dəq İcmal",
-                quality: "1080p HD",
-                image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 19,
-                title: "Portuqaliya vs Fransa 1-0 (Uz.)",
-                tournament: "EURO 2016 Finalı",
-                year: 2016,
-                era: "classic",
-                duration: "22 Dəq İcmal",
-                quality: "1080p 60FPS",
-                image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            },
-            {
-                id: 20,
-                title: "Borussia Dortmund vs Malaga 3-2",
-                tournament: "UEFA Çempionlar Liqası 1/4 Final",
-                year: 2013,
-                era: "classic",
-                duration: "14 Dəq İcmal",
-                quality: "1080p HD",
-                image: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                videoUrl: "https://www.youtube.com/embed/a9tD_i31M9E"
             }
         ];
 
@@ -481,7 +298,6 @@
                 card.className = "pitch-card rounded-2xl overflow-hidden flex flex-col justify-between group";
                 card.innerHTML = `
                     <div>
-                        <!-- Thumbnail Frame -->
                         <div class="relative aspect-video overflow-hidden bg-black">
                             <img src="${match.image}" alt="${match.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100">
                             <div class="absolute inset-0 bg-gradient-to-t from-pitch-950 via-transparent to-transparent"></div>
@@ -494,7 +310,6 @@
                             </span>
                         </div>
 
-                        <!-- Match Info -->
                         <div class="p-5">
                             <div class="text-xs font-extrabold text-pitch-accent uppercase tracking-wider mb-1">
                                 ${match.tournament}
@@ -505,7 +320,6 @@
                         </div>
                     </div>
 
-                    <!-- Footer Action -->
                     <div class="px-5 pb-5 pt-3 border-t border-white/10 flex items-center justify-between">
                         <span class="text-xs font-bold text-slate-400 flex items-center gap-1.5">
                             <i data-lucide="clock" class="w-3.5 h-3.5 text-pitch-accent"></i> ${match.duration}
