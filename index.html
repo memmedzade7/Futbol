@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RM MATCH - Premium İdman Jurnalı & İcmal Arxivi</title>
+    <title>RM MATCH - Futbol Qəzeti & İcmal Arxivi</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -15,16 +15,17 @@
             theme: {
                 extend: {
                     colors: {
-                        mag: {
-                            red: '#e11d48',    /* Diri Parlaq Qırmızı */
-                            darkRed: '#9f1239',
-                            gold: '#f59e0b',
-                            navy: '#0f172a',
-                            cream: '#f8fafc',
+                        gazette: {
+                            paper: '#f7f2e7',
+                            card: '#fffdfa',
+                            border: '#111827',
+                            red: '#991b1b',    /* Mətbuat Qırmızı */
+                            gold: '#b45309',   /* Vintage Qızılı */
+                            ink: '#111827',
                         }
                     },
                     fontFamily: {
-                        headline: ['"Bebas Neue"', 'sans-serif'],
+                        gazette: ['"Playfair Display"', 'serif'],
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     }
                 }
@@ -32,125 +33,125 @@
         }
     </script>
     <style>
-        /* Canlı İdman Jurnalı Foni (Bütün Matçlar) */
+        /* Standart Arxa Fon (Bütün Matçlar) - Zərif Qəzet Kağızı */
         body {
             transition: all 0.5s ease;
-            background-color: #0f172a;
+            background-color: #f7f2e7;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.25) 0%, transparent 60%),
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 100% 100%, 24px 24px, 24px 24px;
-            color: #f8fafc;
+                linear-gradient(rgba(17, 24, 39, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(17, 24, 39, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #111827;
         }
 
-        /* Retro Dövrü (1990-2009) - Qızılı Qəhvəyi Vintage İdman Mətbuatı */
+        /* Retro Dövrü (1990-2009) - İsti Sepia Qəzet */
         body.theme-retro {
-            background-color: #1c130b;
+            background-color: #eee3ce;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.3) 0%, transparent 60%),
-                linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(180, 83, 9, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(180, 83, 9, 0.04) 1px, transparent 1px);
         }
 
-        /* Klassik Dövr (2010-2019) - Dərin Lacivərd Jurnal Atmosferi */
+        /* Klassik Dövr (2010-2019) - Soyuq Mətbuat Krem */
         body.theme-classic {
-            background-color: #09132e;
+            background-color: #ebdcd0;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.3) 0%, transparent 60%),
-                linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(30, 58, 138, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 58, 138, 0.04) 1px, transparent 1px);
         }
 
-        /* Günümüz Dövrü (2020+) - Neon Bənövşəyi Müasir Stil */
+        /* Günümüz Dövrü (2020+) - Aydın Şıq Mətbuat */
         body.theme-modern {
-            background-color: #14092a;
+            background-color: #f9f6f0;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.3) 0%, transparent 60%),
-                linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(109, 40, 217, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(109, 40, 217, 0.04) 1px, transparent 1px);
         }
 
-        .magazine-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 2px solid rgba(225, 29, 72, 0.3);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .gazette-border-double {
+            border-style: double;
+            border-width: 4px;
+            border-color: #111827;
         }
 
-        .magazine-card:hover {
-            transform: translateY(-6px) scale(1.01);
-            border-color: #e11d48;
-            box-shadow: 0 20px 35px -10px rgba(225, 29, 72, 0.4);
+        .gazette-card {
+            background: #fffdfa;
+            border: 2px solid #111827;
+            box-shadow: 4px 4px 0px #111827;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .magazine-badge {
-            clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+        .gazette-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 7px 7px 0px #991b1b;
+            border-color: #991b1b;
+        }
+
+        .nav-tab-gazette.active {
+            color: #991b1b;
+            border-bottom: 3px solid #991b1b;
         }
     </style>
 </head>
-<body id="mainBody" class="font-sans min-h-screen flex flex-col selection:bg-mag-red selection:text-white">
+<body id="mainBody" class="font-sans min-h-screen flex flex-col selection:bg-gazette-red selection:text-white">
 
-    <!-- Header / Magazine Navbar -->
-    <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b-2 border-mag-red">
+    <!-- Header / Qəzet Başlığı -->
+    <header class="border-b-4 border-gazette-ink bg-gazette-paper sticky top-0 z-40 shadow-sm">
         
-        <!-- Yuxarı Xəbər Lentası -->
-        <div class="bg-mag-red text-white py-1 px-4 text-xs font-bold font-headline tracking-widest flex justify-between items-center">
-            <span class="flex items-center gap-1.5"><i data-lucide="flame" class="w-4 h-4"></i> XÜSUSİ BURAXILIŞ: ƏFSANƏVİ FUTBOL MATCHLARI</span>
-            <span class="hidden sm:inline">RM MATCH MƏXSU Sİ İDMAN ARXİVİ</span>
+        <!-- Yuxarı Mətbuat Tarixi Lenti -->
+        <div class="border-b border-gazette-ink/30 py-1 px-4 text-[11px] font-bold font-gazette uppercase tracking-widest text-gazette-ink/80">
+            <div class="max-w-[1400px] mx-auto flex justify-between items-center">
+                <span>NÖMRƏ: #001 — XÜSUSİ İDMAN NƏŞRİ</span>
+                <span>BAKI, ƏFSANƏVİ FUTBOL MATCHLARI</span>
+                <span>QİYMƏT: PULSUZ ARXİV</span>
+            </div>
         </div>
 
-        <!-- Main Header -->
+        <!-- Əsas Header Bölməsi -->
         <div class="max-w-[1400px] mx-auto px-4 py-3">
             <div class="flex items-center justify-between gap-4">
                 
-                <!-- Logo & Nav Tabs (Tam Sola Çəkildi) -->
+                <!-- Logo & Navigation (Sola Sıxlaşdırıldı) -->
                 <div class="flex items-center space-x-6 sm:space-x-8">
-                    <!-- Jurnal Logo -->
-                    <a href="#" class="flex items-center space-x-3 group">
-                        <div class="bg-gradient-to-tr from-mag-red to-mag-gold p-2 rounded-xl shadow-lg group-hover:scale-105 transition-transform">
-                            <i data-lucide="trophy" class="w-6 h-6 text-white"></i>
-                        </div>
-                        <div>
-                            <span class="text-3xl sm:text-4xl font-black font-headline tracking-wider text-white uppercase block leading-none">
-                                RM <span class="text-mag-red">MATCH</span>
-                            </span>
-                            <span class="text-[10px] font-bold tracking-widest uppercase text-mag-gold block">
-                                Minlərlə matç, tək məkan
-                            </span>
-                        </div>
+                    <!-- Logo -->
+                    <a href="#" class="flex flex-col group">
+                        <span class="text-3xl sm:text-4xl font-black font-gazette uppercase tracking-tighter text-gazette-ink leading-none group-hover:text-gazette-red transition-colors">
+                            RM MATCH
+                        </span>
+                        <span class="text-[9px] font-extrabold uppercase tracking-widest text-gazette-red border-t border-b border-gazette-ink/30 mt-1 py-0.5">
+                            Minlərlə matç, tək məkan
+                        </span>
                     </a>
 
                     <!-- Navigation Tabs -->
-                    <nav class="hidden lg:flex items-center space-x-6 text-sm font-extrabold uppercase tracking-wider pl-4 border-l-2 border-slate-800">
-                        <a href="#matches" class="text-mag-red flex items-center gap-2 py-1 border-b-2 border-mag-red">
-                            <i data-lucide="play-circle" class="w-4 h-4"></i> Matçlar
+                    <nav class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider pl-4 border-l-2 border-gazette-ink/20 font-gazette">
+                        <a href="#matches" class="nav-tab-gazette active flex items-center gap-1.5 py-1 text-gazette-ink hover:text-gazette-red transition-colors">
+                            <i data-lucide="newspaper" class="w-4 h-4 text-gazette-red"></i> Matçlar
                         </a>
-                        <a href="#tournaments" class="text-slate-300 hover:text-mag-red transition-colors flex items-center gap-2 py-1">
-                            <i data-lucide="award" class="w-4 h-4"></i> Turnirlər
+                        <a href="#tournaments" class="nav-tab-gazette flex items-center gap-1.5 py-1 text-gazette-ink/70 hover:text-gazette-red transition-colors">
+                            <i data-lucide="trophy" class="w-4 h-4 text-gazette-gold"></i> Turnirlər
                         </a>
-                        <a href="#players" class="text-slate-300 hover:text-mag-red transition-colors flex items-center gap-2 py-1">
-                            <i data-lucide="users" class="w-4 h-4"></i> Oyunçular
+                        <a href="#players" class="nav-tab-gazette flex items-center gap-1.5 py-1 text-gazette-ink/70 hover:text-gazette-red transition-colors">
+                            <i data-lucide="users" class="w-4 h-4 text-gazette-red"></i> Oyunçular
                         </a>
-                        <a href="#clubs" class="text-slate-300 hover:text-mag-red transition-colors flex items-center gap-2 py-1">
-                            <i data-lucide="shield" class="w-4 h-4"></i> Klublar
+                        <a href="#clubs" class="nav-tab-gazette flex items-center gap-1.5 py-1 text-gazette-ink/70 hover:text-gazette-red transition-colors">
+                            <i data-lucide="shield" class="w-4 h-4 text-gazette-gold"></i> Klublar
                         </a>
                     </nav>
                 </div>
 
-                <!-- Sağ Tərəf: Yaradıcı Və Axtarış Zolağı -->
+                <!-- Sağ Tərəf: Axtarış Zolağı Və Üstündə Yaradıcı Yazısı -->
                 <div class="flex flex-col items-end gap-1 ml-auto">
-                    <!-- Yaradıcı İmzası -->
-                    <div class="text-[11px] font-black uppercase tracking-wider text-mag-gold flex items-center gap-1">
-                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-mag-red"></i> Yaradıcı: Rəsul Məmmədzadə
+                    <!-- Yaradıcı İmzası (Axtarış zolağının tam üstündə) -->
+                    <div class="text-[11px] font-extrabold uppercase tracking-wide text-gazette-red font-gazette flex items-center gap-1">
+                        <i data-lucide="pen-tool" class="w-3.5 h-3.5"></i> Yaradıcı: Rəsul Məmmədzadə
                     </div>
 
                     <!-- Axtarış Zolağı -->
                     <div class="relative w-40 sm:w-64">
-                        <input type="text" id="searchInput" oninput="filterMatches()" placeholder="Matç, komanda, il axtarın..." 
-                            class="w-full bg-slate-900 text-xs sm:text-sm text-white placeholder-slate-400 font-semibold rounded-lg pl-9 pr-3 py-1.5 border-2 border-slate-700 focus:outline-none focus:border-mag-red transition-all">
-                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2"></i>
+                        <input type="text" id="searchInput" oninput="filterMatches()" placeholder="Arxivdə axtarın..." 
+                            class="w-full bg-gazette-card text-xs sm:text-sm text-gazette-ink font-semibold placeholder-gazette-ink/50 rounded-none pl-8 pr-3 py-1.5 border-2 border-gazette-ink focus:outline-none focus:border-gazette-red focus:bg-white transition-all">
+                        <i data-lucide="search" class="w-4 h-4 text-gazette-ink absolute left-2.5 top-2"></i>
                     </div>
                 </div>
 
@@ -158,44 +159,51 @@
         </div>
 
         <!-- Mərkəzdə Yuxarıya Yerləşdirilmiş DÖVR TABLARI -->
-        <div class="bg-slate-900/80 border-t border-slate-800 py-2">
+        <div class="border-t-2 border-gazette-ink bg-gazette-paper/80 py-2">
             <div class="max-w-[1400px] mx-auto px-4 flex justify-center">
-                <div class="flex flex-wrap items-center justify-center gap-2 font-headline tracking-wide text-sm" id="eraFilters">
-                    <button onclick="setEraFilter('all')" class="era-btn active-era px-5 py-1 rounded-md bg-mag-red text-white font-bold shadow-lg transition-all">BÜTÜN MATÇLAR</button>
-                    <button onclick="setEraFilter('retro')" class="era-btn px-5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-mag-red hover:text-white transition-all">RETRO (1990 - 2009)</button>
-                    <button onclick="setEraFilter('classic')" class="era-btn px-5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-mag-red hover:text-white transition-all">KLASSİK (2010 - 2019)</button>
-                    <button onclick="setEraFilter('modern')" class="era-btn px-5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-mag-red hover:text-white transition-all">GÜNÜMÜZ (2020+)</button>
+                <div class="flex flex-wrap items-center justify-center gap-2 font-gazette font-bold text-xs uppercase" id="eraFilters">
+                    <button onclick="setEraFilter('all')" class="era-btn active-era px-4 py-1.5 bg-gazette-ink text-gazette-paper border-2 border-gazette-ink shadow-sm">Bütün Matçlar</button>
+                    <button onclick="setEraFilter('retro')" class="era-btn px-4 py-1.5 bg-gazette-card text-gazette-ink border-2 border-gazette-ink hover:bg-gazette-red hover:text-white transition-all">Retro (1990 - 2009)</button>
+                    <button onclick="setEraFilter('classic')" class="era-btn px-4 py-1.5 bg-gazette-card text-gazette-ink border-2 border-gazette-ink hover:bg-gazette-red hover:text-white transition-all">Klassik (2010 - 2019)</button>
+                    <button onclick="setEraFilter('modern')" class="era-btn px-4 py-1.5 bg-gazette-card text-gazette-ink border-2 border-gazette-ink hover:bg-gazette-red hover:text-white transition-all">Günümüz (2020+)</button>
                 </div>
             </div>
         </div>
 
     </header>
 
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
-        <!-- Hero Banner -->
-        <div class="relative rounded-2xl overflow-hidden mb-12 border-2 border-mag-red bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-8 sm:p-12 shadow-2xl">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-mag-red/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="relative z-10 max-w-3xl">
-                <span class="inline-block px-3 py-1 bg-mag-red text-white text-xs font-black font-headline tracking-widest uppercase mb-4 rounded">
-                    ƏFSANƏVİ İDMAN ARXİVİ
-                </span>
-                <h1 class="text-4xl sm:text-6xl font-black font-headline tracking-tight leading-none mb-4 uppercase">
-                    TARİXİN ƏN DƏHŞƏTLİ <span class="text-mag-red">FUTBOL DÖYÜŞLƏRİ</span>
-                </h1>
-                <p class="text-slate-300 text-base sm:text-lg font-semibold leading-relaxed mb-6">
-                    Köhnə matçların darıxdırıcı 90 dəqiqələrinə vaxt itirməyin. Ən dramatik xalları, qolları və dönüşləri 15-20 dəqiqəlik canlı HD icmallarla izləyin.
-                </p>
+        <!-- Front Page Headline Banner -->
+        <div class="gazette-border-double bg-gazette-card p-6 sm:p-10 mb-10 shadow-lg">
+            <div class="border-b-2 border-gazette-ink pb-2 mb-4 flex justify-between items-center text-xs font-gazette font-bold uppercase tracking-widest text-gazette-red">
+                <span>XÜSUSİ MANŞƏT İNCƏLƏMƏSİ</span>
+                <span>FUTBOL XRONİKASI</span>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <div class="lg:col-span-2">
+                    <h1 class="text-3xl sm:text-5xl font-black font-gazette uppercase leading-none mb-4 text-gazette-ink">
+                        TARİXİN ƏN UNUDULMAZ <br><span class="underline decoration-gazette-red decoration-4">FUTBOL MÜHARİBƏLƏRİ</span>
+                    </h1>
+                    <p class="text-sm sm:text-base font-semibold text-gazette-ink/80 leading-relaxed">
+                        90-cı illərin çamurlu meydanlarından müasir Çempionlar Liqası gecələrinə qədər — 15-20 dəqiqəlik xüsusi hazırlanmış yüksək keyfiyyətli video xülasələr burada toplanıb.
+                    </p>
+                </div>
+                <div class="border-t-2 lg:border-t-0 lg:border-l-2 border-gazette-ink pt-4 lg:pt-0 lg:pl-6 text-sm font-gazette italic text-gazette-ink/90">
+                    <p class="mb-2 font-bold text-gazette-ink uppercase not-italic">"Futbol 90 dəqiqədir, amma xatirələr əbədidir."</p>
+                    <p>Bütün əfsanəvi matçların ən həyəcanlı anları bərpa olunmuş yüksək keyfiyyətlə arxivləşdirilir.</p>
+                </div>
             </div>
         </div>
 
         <!-- Section Title -->
-        <div class="flex items-center justify-between border-b-2 border-mag-red pb-3 mb-8">
-            <h2 class="text-3xl font-black font-headline uppercase text-white tracking-wider flex items-center gap-2">
-                <i data-lucide="tv" class="w-6 h-6 text-mag-red"></i> Matç Arxivi Və Video İcmallar
+        <div class="flex items-center justify-between border-b-2 border-gazette-ink pb-2 mb-8">
+            <h2 class="text-2xl font-black font-gazette uppercase text-gazette-ink flex items-center gap-2">
+                <i data-lucide="film" class="w-6 h-6 text-gazette-red"></i> Matç Arxivi Və Video İcmallar
             </h2>
-            <span class="text-xs font-bold text-mag-gold uppercase">Yüksək Keyfiyyətli Video Baza</span>
+            <span class="text-xs font-gazette font-bold uppercase text-gazette-gold">Səhifə 1 / Nəşrlər</span>
         </div>
 
         <!-- Matches Cards Grid -->
@@ -206,11 +214,11 @@
     </main>
 
     <!-- Video Modal -->
-    <div id="videoModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="relative w-full max-w-4xl bg-slate-900 rounded-xl border-2 border-mag-red overflow-hidden shadow-2xl">
-            <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950">
-                <h4 id="modalTitle" class="font-headline font-bold text-xl text-white uppercase tracking-wider">Matç İcmalı</h4>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-mag-red font-bold p-1 transition-colors">
+    <div id="videoModal" class="fixed inset-0 z-50 bg-gazette-ink/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-4xl bg-gazette-card border-4 border-gazette-ink shadow-2xl">
+            <div class="p-3 border-b-2 border-gazette-ink flex justify-between items-center bg-gazette-paper">
+                <h4 id="modalTitle" class="font-gazette font-black text-base sm:text-lg text-gazette-ink uppercase">Matç İcmalı</h4>
+                <button onclick="closeModal()" class="text-gazette-ink hover:text-gazette-red font-bold p-1">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
@@ -223,12 +231,12 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 border-t-2 border-mag-red py-8 mt-16 text-center">
+    <footer class="border-t-4 border-gazette-ink bg-gazette-paper py-8 mt-16 text-center font-gazette">
         <div class="max-w-7xl mx-auto px-4 flex flex-col items-center gap-2">
-            <div class="text-2xl font-black font-headline uppercase tracking-widest text-white">RM <span class="text-mag-red">MATCH</span></div>
-            <p class="text-xs text-slate-400 font-semibold uppercase"> BÜTÜN HÜQUQLAR QORUNUR © 2026</p>
-            <p class="text-xs font-bold text-mag-gold uppercase tracking-wider flex items-center gap-1 mt-1">
-                <i data-lucide="code" class="w-4 h-4 text-mag-red"></i> Yaradıcı: Rəsul Məmmədzadə
+            <div class="text-2xl font-black uppercase tracking-widest text-gazette-ink">RM MATCH</div>
+            <p class="text-xs text-gazette-ink/70 uppercase">BÜTÜN MƏQALƏLƏR VƏ VİDEOLAR NƏŞR MƏQSƏDİLƏ SAXLANILIR © 2026</p>
+            <p class="text-xs font-bold text-gazette-red uppercase tracking-wider flex items-center gap-1 mt-1">
+                <i data-lucide="pen-tool" class="w-4 h-4"></i> Yaradıcı: Rəsul Məmmədzadə
             </p>
         </div>
     </footer>
@@ -312,8 +320,8 @@
 
             if (data.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-span-full text-center py-16 text-slate-400 font-bold">
-                        <p class="text-xl uppercase">Axtarışa uyğun matç tapılmadı.</p>
+                    <div class="col-span-full text-center py-16 text-gazette-ink/70 font-gazette">
+                        <p class="text-xl font-bold uppercase">Axtarışa uyğun xəbər və ya matç tapılmadı.</p>
                     </div>
                 `;
                 lucide.createIcons();
@@ -322,38 +330,35 @@
 
             data.forEach(match => {
                 const card = document.createElement('div');
-                card.className = "magazine-card rounded-xl overflow-hidden flex flex-col justify-between group";
+                card.className = "gazette-card flex flex-col justify-between p-4";
                 card.innerHTML = `
                     <div>
                         <!-- Thumbnail Frame -->
-                        <div class="relative aspect-video overflow-hidden bg-black">
-                            <img src="${match.image}" alt="${match.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
-                            
-                            <span class="magazine-badge absolute top-3 left-0 bg-mag-red text-white text-xs font-black font-headline px-3 py-1 uppercase">
+                        <div class="relative aspect-video overflow-hidden border-2 border-gazette-ink mb-3 bg-black">
+                            <img src="${match.image}" alt="${match.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-2 left-2 bg-gazette-ink text-gazette-paper text-[10px] font-gazette font-bold px-2 py-0.5 uppercase">
                                 ${match.year}
                             </span>
-                            <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md text-mag-gold border border-mag-gold/40 text-xs font-extrabold px-2.5 py-1 rounded">
+                            <span class="absolute top-2 right-2 bg-gazette-paper text-gazette-ink border border-gazette-ink text-[10px] font-gazette font-bold px-2 py-0.5 uppercase">
                                 ${match.quality}
                             </span>
                         </div>
 
-                        <!-- Match Info -->
-                        <div class="p-5">
-                            <div class="text-xs font-black text-mag-gold uppercase tracking-wider mb-1">
-                                ${match.tournament}
-                            </div>
-                            <h3 class="text-xl font-extrabold text-white group-hover:text-mag-red transition-colors leading-snug">
-                                ${match.title}
-                            </h3>
+                        <!-- Match Title & Tournament -->
+                        <div class="text-[10px] font-gazette font-black text-gazette-red uppercase tracking-wider mb-1 border-b border-gazette-ink/20 pb-1">
+                            ${match.tournament}
                         </div>
+                        <h3 class="text-xl font-black font-gazette text-gazette-ink uppercase leading-tight mb-2 hover:text-gazette-red transition-colors">
+                            ${match.title}
+                        </h3>
                     </div>
 
                     <!-- Footer Action -->
-                    <div class="px-5 pb-5 pt-3 border-t border-slate-700/50 flex items-center justify-between">
-                        <span class="text-xs font-bold text-slate-400 flex items-center gap-1">
-                            <i data-lucide="clock" class="w-3.5 h-3.5 text-mag-red"></i> ${match.duration}
+                    <div class="pt-3 mt-2 border-t-2 border-gazette-ink flex items-center justify-between">
+                        <span class="text-xs font-bold text-gazette-ink/70 flex items-center gap-1">
+                            <i data-lucide="clock" class="w-3.5 h-3.5 text-gazette-red"></i> ${match.duration}
                         </span>
-                        <button onclick="openModal('${match.title}', '${match.videoUrl}')" class="font-headline font-black text-sm bg-mag-red hover:bg-mag-darkRed text-white px-4 py-2 rounded-lg uppercase tracking-wider transition-colors shadow-md">
+                        <button onclick="openModal('${match.title}', '${match.videoUrl}')" class="font-gazette font-black text-xs bg-gazette-ink text-gazette-paper hover:bg-gazette-red hover:text-white px-3 py-1.5 uppercase transition-colors">
                             İCMALI İZLƏ
                         </button>
                     </div>
@@ -379,19 +384,19 @@
             currentEra = era;
             const body = document.getElementById('mainBody');
             
-            body.className = "font-sans min-h-screen flex flex-col selection:bg-mag-red selection:text-white";
+            body.className = "font-sans min-h-screen flex flex-col selection:bg-gazette-red selection:text-white";
             if (era === 'retro') body.classList.add('theme-retro');
             else if (era === 'classic') body.classList.add('theme-classic');
             else if (era === 'modern') body.classList.add('theme-modern');
 
             const buttons = document.querySelectorAll('.era-btn');
             buttons.forEach(btn => {
-                btn.classList.remove('bg-mag-red', 'text-white', 'shadow-lg');
-                btn.classList.add('bg-slate-800', 'text-slate-300');
+                btn.classList.remove('bg-gazette-ink', 'text-gazette-paper');
+                btn.classList.add('bg-gazette-card', 'text-gazette-ink');
             });
             
-            event.target.classList.remove('bg-slate-800', 'text-slate-300');
-            event.target.classList.add('bg-mag-red', 'text-white', 'shadow-lg');
+            event.target.classList.remove('bg-gazette-card', 'text-gazette-ink');
+            event.target.classList.add('bg-gazette-ink', 'text-gazette-paper');
 
             filterMatches();
         }
