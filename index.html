@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RM MATCH - Futbol Mətbuatı & İcmal Arxivi</title>
+    <title>RM MATCH - Premium Futbol Arxivi</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -15,17 +15,17 @@
             theme: {
                 extend: {
                     colors: {
-                        gazette: {
-                            paper: '#f5edd6',
-                            card: '#fffef9',
-                            border: '#0f172a',
-                            red: '#991b1b',
-                            gold: '#b45309',
-                            ink: '#0f172a',
+                        pitch: {
+                            950: '#030712',
+                            900: '#0b0f19',
+                            800: '#111827',
+                            emerald: '#10b981',
+                            cyan: '#06b6d4',
+                            purple: '#a855f7',
+                            amber: '#f59e0b',
                         }
                     },
                     fontFamily: {
-                        gazette: ['"Playfair Display"', 'serif'],
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     }
                 }
@@ -33,179 +33,182 @@
         }
     </script>
     <style>
-        /* Zəngin Və Dinamik Futbol Qəzeti Fonu */
+        /* Standart Ultra-Modern Cyber Pitch Fonu */
         body {
             transition: all 0.5s ease;
-            background-color: #f2e6cb;
+            background-color: #030712;
             background-image: 
-                linear-gradient(to bottom, rgba(242, 230, 203, 0.85), rgba(220, 200, 160, 0.92)),
-                url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            color: #0f172a;
+                radial-gradient(circle at 50% -10%, rgba(16, 185, 129, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 10% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            color: #f9fafb;
         }
 
-        /* Retro Dövrü (1990-2009) - Klassik Sepia Futbol Arxiv Fonu */
+        /* Retro Dövrü (1990-2009) - Warm Amber Neon */
         body.theme-retro {
-            background-color: #e5d3b3;
             background-image: 
-                linear-gradient(to bottom, rgba(229, 211, 179, 0.88), rgba(185, 150, 100, 0.93)),
-                url('https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=1920&q=80');
+                radial-gradient(circle at 50% -10%, rgba(245, 158, 11, 0.3) 0%, transparent 60%),
+                radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.15) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
 
-        /* Klassik Dövr (2010-2019) - Dərin Göy-Krem İdman Arenası Fonu */
+        /* Klassik Dövr (2010-2019) - Deep Royal Cyan/Blue */
         body.theme-classic {
-            background-color: #dbe4f0;
             background-image: 
-                linear-gradient(to bottom, rgba(219, 228, 240, 0.88), rgba(160, 180, 210, 0.93)),
-                url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1920&q=80');
+                radial-gradient(circle at 50% -10%, rgba(6, 182, 212, 0.3) 0%, transparent 60%),
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.2) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
 
-        /* Günümüz Dövrü (2020+) - Aydın Müasir Stadion Qrafikası */
+        /* Günümüz Dövrü (2020+) - Kiber Purple Neon */
         body.theme-modern {
-            background-color: #f0ebf8;
             background-image: 
-                linear-gradient(to bottom, rgba(240, 235, 248, 0.88), rgba(200, 180, 230, 0.93)),
-                url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1920&q=80');
+                radial-gradient(circle at 50% -10%, rgba(168, 85, 247, 0.3) 0%, transparent 60%),
+                radial-gradient(circle at 80% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
 
-        .gazette-border-double {
-            border-style: double;
-            border-width: 5px;
-            border-color: #0f172a;
+        .cyber-card {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .gazette-card {
-            background: #fffef9;
-            border: 2px solid #0f172a;
-            box-shadow: 6px 6px 0px #0f172a;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        .cyber-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(16, 185, 129, 0.5);
+            box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.25);
         }
 
-        .gazette-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 9px 9px 0px #991b1b;
-            border-color: #991b1b;
+        .glow-text {
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
         }
 
-        .nav-tab-gazette.active {
-            color: #991b1b;
-            border-bottom: 3px solid #991b1b;
+        .nav-link {
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #10b981, #06b6d4);
+            border-radius: 2px;
+            box-shadow: 0 0 10px #10b981;
         }
     </style>
 </head>
-<body id="mainBody" class="font-sans min-h-screen flex flex-col selection:bg-gazette-red selection:text-white">
+<body id="mainBody" class="font-sans min-h-screen flex flex-col selection:bg-pitch-emerald selection:text-black">
 
-    <!-- Header / Qəzet Başlığı -->
-    <header class="border-b-4 border-gazette-ink bg-gazette-paper/95 backdrop-blur-md sticky top-0 z-40 shadow-md">
-        
-        <!-- Yuxarı Mətbuat Tarixi Lenti -->
-        <div class="border-b border-gazette-ink/30 py-1 px-4 text-[11px] font-bold font-gazette uppercase tracking-widest text-gazette-ink/80 bg-black/5">
-            <div class="max-w-[1400px] mx-auto flex justify-between items-center">
-                <span>NÖMRƏ: #001 — XÜSUSİ İDMAN NƏŞRİ</span>
-                <span>BAKI, ƏFSANƏVİ FUTBOL MATCHLARI</span>
-                <span>QİYMƏT: PULSUZ ARXİV</span>
-            </div>
-        </div>
-
-        <!-- Əsas Header Bölməsi -->
-        <div class="max-w-[1400px] mx-auto px-4 py-3">
+    <!-- Header / Cyber Navbar -->
+    <header class="sticky top-0 z-40 bg-pitch-950/80 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-[1400px] mx-auto px-4 py-3 flex flex-col gap-3">
+            
+            <!-- Üst Sıra: Logo, Menyu Və Sağ Hissə -->
             <div class="flex items-center justify-between gap-4">
                 
-                <!-- Logo & Navigation (Sola Çəkildi) -->
+                <!-- Logo & Nav Tabs (Tam Sola Sıxlaşdırıldı) -->
                 <div class="flex items-center space-x-6 sm:space-x-8">
-                    <!-- Logo -->
-                    <a href="#" class="flex flex-col group">
-                        <span class="text-3xl sm:text-4xl font-black font-gazette uppercase tracking-tighter text-gazette-ink leading-none group-hover:text-gazette-red transition-colors">
-                            RM MATCH
-                        </span>
-                        <span class="text-[9px] font-extrabold uppercase tracking-widest text-gazette-red border-t border-b border-gazette-ink/30 mt-1 py-0.5">
-                            Minlərlə matç, tək məkan
-                        </span>
+                    <!-- Modern Brand Logo -->
+                    <a href="#" class="flex items-center space-x-3 group">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pitch-emerald via-pitch-cyan to-indigo-600 p-[1px] shadow-lg shadow-pitch-emerald/20 group-hover:scale-105 transition-transform">
+                            <div class="w-full h-full bg-pitch-950 rounded-[11px] flex items-center justify-center">
+                                <i data-lucide="trophy" class="w-5 h-5 text-pitch-emerald"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-2xl sm:text-3xl font-black tracking-wider uppercase bg-gradient-to-r from-white via-slate-100 to-pitch-emerald bg-clip-text text-transparent block leading-none">
+                                RM MATCH
+                            </span>
+                            <span class="text-[9px] sm:text-[10px] text-pitch-emerald/90 font-bold tracking-widest uppercase mt-0.5 block">
+                                Minlərlə matç, tək məkan
+                            </span>
+                        </div>
                     </a>
 
                     <!-- Navigation Tabs -->
-                    <nav class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider pl-4 border-l-2 border-gazette-ink/20 font-gazette">
-                        <a href="#matches" class="nav-tab-gazette active flex items-center gap-1.5 py-1 text-gazette-ink hover:text-gazette-red transition-colors">
-                            <i data-lucide="newspaper" class="w-4 h-4 text-gazette-red"></i> Matçlar
+                    <nav class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider pl-4 border-l border-white/10">
+                        <a href="#matches" class="nav-link active text-white hover:text-pitch-emerald transition-colors py-1 flex items-center gap-2">
+                            <i data-lucide="play-circle" class="w-4 h-4 text-pitch-emerald"></i> Matçlar
                         </a>
-                        <a href="#tournaments" class="nav-tab-gazette flex items-center gap-1.5 py-1 text-gazette-ink/70 hover:text-gazette-red transition-colors">
-                            <i data-lucide="trophy" class="w-4 h-4 text-gazette-gold"></i> Turnirlər
+                        <a href="#tournaments" class="nav-link text-slate-400 hover:text-pitch-emerald transition-colors py-1 flex items-center gap-2">
+                            <i data-lucide="award" class="w-4 h-4 text-pitch-cyan"></i> Turnirlər
                         </a>
-                        <a href="#players" class="nav-tab-gazette flex items-center gap-1.5 py-1 text-gazette-ink/70 hover:text-gazette-red transition-colors">
-                            <i data-lucide="users" class="w-4 h-4 text-gazette-red"></i> Oyunçular
+                        <a href="#players" class="nav-link text-slate-400 hover:text-pitch-emerald transition-colors py-1 flex items-center gap-2">
+                            <i data-lucide="users" class="w-4 h-4 text-pitch-emerald"></i> Oyunçular
                         </a>
-                        <a href="#clubs" class="nav-tab-gazette flex items-center gap-1.5 py-1 text-gazette-ink/70 hover:text-gazette-red transition-colors">
-                            <i data-lucide="shield" class="w-4 h-4 text-gazette-gold"></i> Klublar
+                        <a href="#clubs" class="nav-link text-slate-400 hover:text-pitch-emerald transition-colors py-1 flex items-center gap-2">
+                            <i data-lucide="shield" class="w-4 h-4 text-pitch-cyan"></i> Klublar
                         </a>
                     </nav>
                 </div>
 
-                <!-- Sağ Tərəf: Axtarış Zolağı Və Üstündə Yaradıcı Yazısı -->
+                <!-- Sağ Tərəf: Axtarış Və Yaradıcı -->
                 <div class="flex flex-col items-end gap-1 ml-auto">
                     <!-- Yaradıcı İmzası -->
-                    <div class="text-[11px] font-extrabold uppercase tracking-wide text-gazette-red font-gazette flex items-center gap-1">
-                        <i data-lucide="pen-tool" class="w-3.5 h-3.5"></i> Yaradıcı: Rəsul Məmmədzadə
+                    <div class="text-[11px] font-bold text-pitch-emerald flex items-center gap-1">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pitch-cyan"></i> Yaradıcı: <span class="text-white">Rəsul Məmmədzadə</span>
                     </div>
 
                     <!-- Axtarış Zolağı -->
                     <div class="relative w-40 sm:w-64">
-                        <input type="text" id="searchInput" oninput="filterMatches()" placeholder="Arxivdə axtarın..." 
-                            class="w-full bg-gazette-card text-xs sm:text-sm text-gazette-ink font-semibold placeholder-gazette-ink/50 rounded-none pl-8 pr-3 py-1.5 border-2 border-gazette-ink focus:outline-none focus:border-gazette-red focus:bg-white transition-all">
-                        <i data-lucide="search" class="w-4 h-4 text-gazette-ink absolute left-2.5 top-2"></i>
+                        <input type="text" id="searchInput" oninput="filterMatches()" placeholder="Matç, komanda, il..." 
+                            class="w-full bg-pitch-900/90 text-xs sm:text-sm text-white placeholder-slate-400 font-semibold rounded-xl pl-9 pr-3 py-1.5 border border-white/10 focus:outline-none focus:border-pitch-emerald focus:ring-1 focus:ring-pitch-emerald transition-all">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2 sm:top-2.5"></i>
                     </div>
                 </div>
 
             </div>
-        </div>
 
-        <!-- Mərkəzdə Yuxarıya Yerləşdirilmiş DÖVR TABLARI -->
-        <div class="border-t-2 border-gazette-ink bg-gazette-paper/90 py-2">
-            <div class="max-w-[1400px] mx-auto px-4 flex justify-center">
-                <div class="flex flex-wrap items-center justify-center gap-2 font-gazette font-bold text-xs uppercase" id="eraFilters">
-                    <button onclick="setEraFilter('all')" class="era-btn active-era px-4 py-1.5 bg-gazette-ink text-gazette-paper border-2 border-gazette-ink shadow-sm">Bütün Matçlar</button>
-                    <button onclick="setEraFilter('retro')" class="era-btn px-4 py-1.5 bg-gazette-card text-gazette-ink border-2 border-gazette-ink hover:bg-gazette-red hover:text-white transition-all">Retro (1990 - 2009)</button>
-                    <button onclick="setEraFilter('classic')" class="era-btn px-4 py-1.5 bg-gazette-card text-gazette-ink border-2 border-gazette-ink hover:bg-gazette-red hover:text-white transition-all">Klassik (2010 - 2019)</button>
-                    <button onclick="setEraFilter('modern')" class="era-btn px-4 py-1.5 bg-gazette-card text-gazette-ink border-2 border-gazette-ink hover:bg-gazette-red hover:text-white transition-all">Günümüz (2020+)</button>
+            <!-- Alt Sıra: Mərkəzdə Yuxarıya Yerləşdirilmiş DÖVR TABLARI -->
+            <div class="flex items-center justify-center border-t border-white/5 pt-2">
+                <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 bg-pitch-900/90 p-1.5 rounded-2xl border border-white/10 shadow-inner" id="eraFilters">
+                    <button onclick="setEraFilter('all')" class="era-btn active-era px-4 py-1.5 rounded-xl text-xs font-black bg-gradient-to-r from-pitch-emerald to-pitch-cyan text-black shadow-lg transition-all">BÜTÜN MATÇLAR</button>
+                    <button onclick="setEraFilter('retro')" class="era-btn px-4 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all">RETRO (1990 - 2009)</button>
+                    <button onclick="setEraFilter('classic')" class="era-btn px-4 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all">KLASSİK (2010 - 2019)</button>
+                    <button onclick="setEraFilter('modern')" class="era-btn px-4 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all">GÜNÜMÜZ (2020+)</button>
                 </div>
             </div>
-        </div>
 
+        </div>
     </header>
 
     <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
-        <!-- Front Page Headline Banner -->
-        <div class="gazette-border-double bg-gazette-card p-6 sm:p-10 mb-10 shadow-2xl relative overflow-hidden">
-            <div class="border-b-2 border-gazette-ink pb-2 mb-4 flex justify-between items-center text-xs font-gazette font-bold uppercase tracking-widest text-gazette-red">
-                <span>XÜSUSİ MANŞƏT İNCƏLƏMƏSİ</span>
-                <span>FUTBOL XRONİKASI</span>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative z-10">
-                <div class="lg:col-span-2">
-                    <h1 class="text-3xl sm:text-5xl font-black font-gazette uppercase leading-none mb-4 text-gazette-ink">
-                        TARİXİN ƏN UNUDULMAZ <br><span class="underline decoration-gazette-red decoration-4">FUTBOL MÜHARİBƏLƏRİ</span>
-                    </h1>
-                    <p class="text-sm sm:text-base font-semibold text-gazette-ink/80 leading-relaxed">
-                        90-cı illərin çamurlu meydanlarından müasir Çempionlar Liqası gecələrinə qədər — 15-20 dəqiqəlik xüsusi hazırlanmış yüksək keyfiyyətli video xülasələr burada toplanıb.
-                    </p>
+        <!-- Hero Section -->
+        <div class="relative rounded-3xl overflow-hidden mb-12 border border-white/10 bg-gradient-to-r from-pitch-900 via-pitch-800 to-pitch-950 p-8 sm:p-12 shadow-2xl">
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-pitch-emerald/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold bg-pitch-emerald/10 text-pitch-emerald border border-pitch-emerald/30 mb-4">
+                    <i data-lucide="zap" class="w-3.5 h-3.5"></i> EFSANƏVİ FUTBOL DÖVRÜ
                 </div>
-                <div class="border-t-2 lg:border-t-0 lg:border-l-2 border-gazette-ink pt-4 lg:pt-0 lg:pl-6 text-sm font-gazette italic text-gazette-ink/90">
-                    <p class="mb-2 font-bold text-gazette-ink uppercase not-italic">"Futbol 90 dəqiqədir, amma xatirələr əbədidir."</p>
-                    <p>Bütün əfsanəvi matçların ən həyəcanlı anları bərpa olunmuş yüksək keyfiyyətlə arxivləşdirilir.</p>
-                </div>
+                <h1 class="text-3xl sm:text-6xl font-black tracking-tight leading-none mb-4 uppercase">
+                    TARİXİN ƏN DƏHŞƏTLİ <br><span class="bg-gradient-to-r from-pitch-emerald via-pitch-cyan to-indigo-400 bg-clip-text text-transparent glow-text">FUTBOL MÜHARİBƏLƏRİ</span>
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base font-semibold leading-relaxed">
+                    90-cı illər, 2000-ci illərin əfsanələri və günümüzün ən həyəcanlı matçları — 15-20 dəqiqəlik yüksək keyfiyyətli xüsusi icmallarla tək mekanda.
+                </p>
             </div>
         </div>
 
         <!-- Section Title -->
-        <div class="flex items-center justify-between border-b-2 border-gazette-ink pb-2 mb-8 bg-gazette-card/80 p-3 border border-gazette-ink shadow-md">
-            <h2 class="text-2xl font-black font-gazette uppercase text-gazette-ink flex items-center gap-2">
-                <i data-lucide="film" class="w-6 h-6 text-gazette-red"></i> Matç Arxivi Və Video İcmallar
+        <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-8">
+            <h2 class="text-xl sm:text-2xl font-black uppercase text-white flex items-center gap-2">
+                <i data-lucide="tv" class="w-6 h-6 text-pitch-emerald"></i> Matç Arxivi Və İcmallar
             </h2>
-            <span class="text-xs font-gazette font-bold uppercase text-gazette-gold">Səhifə 1 / Nəşrlər</span>
+            <span class="text-xs font-bold text-pitch-cyan uppercase">1080p HD / Restored Video</span>
         </div>
 
         <!-- Matches Cards Grid -->
@@ -216,11 +219,11 @@
     </main>
 
     <!-- Video Modal -->
-    <div id="videoModal" class="fixed inset-0 z-50 bg-gazette-ink/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="relative w-full max-w-4xl bg-gazette-card border-4 border-gazette-ink shadow-2xl">
-            <div class="p-3 border-b-2 border-gazette-ink flex justify-between items-center bg-gazette-paper">
-                <h4 id="modalTitle" class="font-gazette font-black text-base sm:text-lg text-gazette-ink uppercase">Matç İcmalı</h4>
-                <button onclick="closeModal()" class="text-gazette-ink hover:text-gazette-red font-bold p-1">
+    <div id="videoModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-4xl bg-pitch-900 rounded-2xl border border-white/20 overflow-hidden shadow-2xl">
+            <div class="p-4 border-b border-white/10 flex justify-between items-center bg-pitch-950">
+                <h4 id="modalTitle" class="font-bold text-lg text-pitch-emerald uppercase">Matç İcmalı</h4>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
@@ -233,12 +236,12 @@
     </div>
 
     <!-- Footer -->
-    <footer class="border-t-4 border-gazette-ink bg-gazette-paper/95 py-8 mt-16 text-center font-gazette shadow-inner">
+    <footer class="bg-pitch-950 border-t border-white/10 py-8 mt-16 text-center">
         <div class="max-w-7xl mx-auto px-4 flex flex-col items-center gap-2">
-            <div class="text-2xl font-black uppercase tracking-widest text-gazette-ink">RM MATCH</div>
-            <p class="text-xs text-gazette-ink/70 uppercase">BÜTÜN MƏQALƏLƏR VƏ VİDEOLAR NƏŞR MƏQSƏDİLƏ SAXLANILIR © 2026</p>
-            <p class="text-xs font-bold text-gazette-red uppercase tracking-wider flex items-center gap-1 mt-1">
-                <i data-lucide="pen-tool" class="w-4 h-4"></i> Yaradıcı: Rəsul Məmmədzadə
+            <div class="text-2xl font-black uppercase tracking-widest text-white">RM <span class="text-pitch-emerald">MATCH</span></div>
+            <p class="text-xs text-slate-400 font-semibold uppercase">BÜTÜN HÜQUQLAR QORUNUR © 2026</p>
+            <p class="text-xs font-bold text-pitch-emerald uppercase tracking-wider flex items-center gap-1 mt-1">
+                <i data-lucide="code" class="w-4 h-4 text-pitch-cyan"></i> Yaradıcı: Rəsul Məmmədzadə
             </p>
         </div>
     </footer>
@@ -322,8 +325,8 @@
 
             if (data.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-span-full text-center py-16 text-gazette-ink/70 font-gazette">
-                        <p class="text-xl font-bold uppercase">Axtarışa uyğun xəbər və ya matç tapılmadı.</p>
+                    <div class="col-span-full text-center py-16 text-slate-400 font-bold">
+                        <p class="text-lg uppercase">Axtarışa uyğun matç tapılmadı.</p>
                     </div>
                 `;
                 lucide.createIcons();
@@ -332,36 +335,40 @@
 
             data.forEach(match => {
                 const card = document.createElement('div');
-                card.className = "gazette-card flex flex-col justify-between p-4";
+                card.className = "cyber-card rounded-2xl overflow-hidden flex flex-col justify-between group";
                 card.innerHTML = `
                     <div>
                         <!-- Thumbnail Frame -->
-                        <div class="relative aspect-video overflow-hidden border-2 border-gazette-ink mb-3 bg-black">
-                            <img src="${match.image}" alt="${match.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-2 left-2 bg-gazette-ink text-gazette-paper text-[10px] font-gazette font-bold px-2 py-0.5 uppercase">
+                        <div class="relative aspect-video overflow-hidden bg-black">
+                            <img src="${match.image}" alt="${match.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100">
+                            <div class="absolute inset-0 bg-gradient-to-t from-pitch-950 via-transparent to-transparent"></div>
+                            
+                            <span class="absolute top-3 left-3 bg-pitch-950/80 backdrop-blur-md text-pitch-emerald text-xs font-bold px-2.5 py-1 rounded-lg border border-pitch-emerald/30">
                                 ${match.year}
                             </span>
-                            <span class="absolute top-2 right-2 bg-gazette-paper text-gazette-ink border border-gazette-ink text-[10px] font-gazette font-bold px-2 py-0.5 uppercase">
+                            <span class="absolute top-3 right-3 bg-pitch-cyan/20 backdrop-blur-md text-pitch-cyan border border-pitch-cyan/30 text-xs font-semibold px-2.5 py-1 rounded-lg">
                                 ${match.quality}
                             </span>
                         </div>
 
-                        <!-- Match Title & Tournament -->
-                        <div class="text-[10px] font-gazette font-black text-gazette-red uppercase tracking-wider mb-1 border-b border-gazette-ink/20 pb-1">
-                            ${match.tournament}
+                        <!-- Match Info -->
+                        <div class="p-5">
+                            <div class="text-xs font-extrabold text-pitch-cyan uppercase tracking-wider mb-1">
+                                ${match.tournament}
+                            </div>
+                            <h3 class="text-lg font-extrabold text-white group-hover:text-pitch-emerald transition-colors leading-snug">
+                                ${match.title}
+                            </h3>
                         </div>
-                        <h3 class="text-xl font-black font-gazette text-gazette-ink uppercase leading-tight mb-2 hover:text-gazette-red transition-colors">
-                            ${match.title}
-                        </h3>
                     </div>
 
                     <!-- Footer Action -->
-                    <div class="pt-3 mt-2 border-t-2 border-gazette-ink flex items-center justify-between">
-                        <span class="text-xs font-bold text-gazette-ink/70 flex items-center gap-1">
-                            <i data-lucide="clock" class="w-3.5 h-3.5 text-gazette-red"></i> ${match.duration}
+                    <div class="px-5 pb-5 pt-3 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-400 flex items-center gap-1.5">
+                            <i data-lucide="clock" class="w-3.5 h-3.5 text-pitch-emerald"></i> ${match.duration}
                         </span>
-                        <button onclick="openModal('${match.title}', '${match.videoUrl}')" class="font-gazette font-black text-xs bg-gazette-ink text-gazette-paper hover:bg-gazette-red hover:text-white px-3 py-1.5 uppercase transition-colors">
-                            İCMALI İZLƏ
+                        <button onclick="openModal('${match.title}', '${match.videoUrl}')" class="flex items-center gap-2 text-xs font-black bg-gradient-to-r from-pitch-emerald to-pitch-cyan hover:opacity-90 text-black px-4 py-2.5 rounded-xl shadow-lg transition-all">
+                            <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i> İZLƏYİN
                         </button>
                     </div>
                 `;
@@ -386,19 +393,19 @@
             currentEra = era;
             const body = document.getElementById('mainBody');
             
-            body.className = "font-sans min-h-screen flex flex-col selection:bg-gazette-red selection:text-white";
+            body.className = "font-sans min-h-screen flex flex-col selection:bg-pitch-emerald selection:text-black";
             if (era === 'retro') body.classList.add('theme-retro');
             else if (era === 'classic') body.classList.add('theme-classic');
             else if (era === 'modern') body.classList.add('theme-modern');
 
             const buttons = document.querySelectorAll('.era-btn');
             buttons.forEach(btn => {
-                btn.classList.remove('bg-gazette-ink', 'text-gazette-paper');
-                btn.classList.add('bg-gazette-card', 'text-gazette-ink');
+                btn.classList.remove('bg-gradient-to-r', 'from-pitch-emerald', 'to-pitch-cyan', 'text-black', 'shadow-lg');
+                btn.classList.add('text-slate-300');
             });
             
-            event.target.classList.remove('bg-gazette-card', 'text-gazette-ink');
-            event.target.classList.add('bg-gazette-ink', 'text-gazette-paper');
+            event.target.classList.remove('text-slate-300');
+            event.target.classList.add('bg-gradient-to-r', 'from-pitch-emerald', 'to-pitch-cyan', 'text-black', 'shadow-lg');
 
             filterMatches();
         }
@@ -407,7 +414,7 @@
             const modal = document.getElementById('videoModal');
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('videoContainer').innerHTML = `
-                <iframe class="w-full h-full" src="${videoUrl}?autoplay=1" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe class="w-full h-full rounded-b-xl" src="${videoUrl}?autoplay=1" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             `;
             modal.classList.remove('hidden');
         }
