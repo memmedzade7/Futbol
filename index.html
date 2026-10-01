@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -163,7 +165,6 @@
     <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
-        <!-- Section Title -->
         <div class="flex items-center justify-between border-b border-pitch-accent/20 pb-3 mb-8">
             <h2 class="text-xl sm:text-2xl font-black uppercase text-white flex items-center gap-2">
                 <i data-lucide="tv" class="w-6 h-6 text-pitch-accent"></i> Matç Arxivi Və İcmallar
@@ -173,7 +174,10 @@
 
         <!-- Matches Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="matchesGrid">
-            <!-- JS Populated Cards -->
+            <div class="col-span-full text-center py-20 text-pitch-accent font-bold">
+                <i data-lucide="loader" class="w-10 h-10 animate-spin mx-auto mb-2"></i>
+                Matçlar bazadan yüklənir...
+            </div>
         </div>
 
     </main>
@@ -195,90 +199,107 @@
         </div>
     </div>
 
+    <!-- Admin Panel Modal -->
+    <div id="adminModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-xl bg-pitch-900 rounded-2xl border border-pitch-accent/50 p-6 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-4">
+                <h3 class="text-xl font-black text-pitch-accent uppercase flex items-center gap-2">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i> Yeni Matç Əlavə Et
+                </h3>
+                <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <form id="addMatchForm" onsubmit="saveMatch(event)" class="space-y-4 text-xs font-bold">
+                <div>
+                    <label class="text-slate-300 block mb-1">Matçın Adı (məs: Barcelona vs PSG 6-1):</label>
+                    <input type="text" id="mTitle" required class="w-full bg-pitch-950 border border-white/10 rounded-lg p-2.5 text-white focus:border-pitch-accent outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-slate-300 block mb-1">Turnir (məs: UEFA Champions League):</label>
+                        <input type="text" id="mTournament" required class="w-full bg-pitch-950 border border-white/10 rounded-lg p-2.5 text-white focus:border-pitch-accent outline-none">
+                    </div>
+                    <div>
+                        <label class="text-slate-300 block mb-1">İl (məs: 2017):</label>
+                        <input type="number" id="mYear" required class="w-full bg-pitch-950 border border-white/10 rounded-lg p-2.5 text-white focus:border-pitch-accent outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="text-slate-300 block mb-1">Dövr:</label>
+                        <select id="mEra" class="w-full bg-pitch-950 border border-white/10 rounded-lg p-2.5 text-white focus:border-pitch-accent outline-none">
+                            <option value="retro">Retro (1990-2009)</option>
+                            <option value="classic">Klassik (2010-2019)</option>
+                            <option value="modern">Günümüz (2020+)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-slate-300 block mb-1">Müddət (məs: 20 Dəq İcmal):</label>
+                        <input type="text" id="mDuration" required class="w-full bg-pitch-950 border border-white/10 rounded-lg p-2.5 text-white focus:border-pitch-accent outline-none">
+                    </div>
+                    <div>
+                        <label class="text-slate-300 block mb-1">Keyfiyyət (məs: 4K 60FPS):</label>
+                        <input type="text" id="mQuality" required class="w-full bg-pitch-950 border border-white/10 rounded-lg p-2.5 text-white focus:border-pitch-accent outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-slate-300 block mb-1">Qapaq Şəklinin Linki (Poster URL):</label>
+                    <input type="url" id="mPoster" required class="w-full bg-pitch-950 border border-white/10 rounded-lg p-2.5 text-white focus:border-pitch-accent outline-none">
+                </div>
+                <div>
+                    <label class="text-slate-300 block mb-1">Video Linki (YouTube Embed URL):</label>
+                    <input type="url" id="mVideoUrl" required class="w-full bg-pitch-950 border border-white/10 rounded-lg p-2.5 text-white focus:border-pitch-accent outline-none">
+                </div>
+                <button type="submit" id="saveBtn" class="w-full bg-gradient-to-r from-pitch-accent to-emerald-400 text-black py-3 rounded-xl font-black text-sm uppercase shadow-lg hover:opacity-90 transition-all mt-2">
+                    Bazaya Əlavə Et
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-pitch-950 border-t border-pitch-accent/20 py-8 mt-16 text-center">
         <div class="max-w-7xl mx-auto px-4 flex flex-col items-center gap-2">
             <div class="text-2xl font-black uppercase tracking-widest text-white">RM <span class="text-pitch-accent">MATCH</span></div>
             <p class="text-xs text-slate-400 font-semibold uppercase">BÜTÜN HÜQUQLAR QORUNUR © 2026</p>
-            <p class="text-xs font-bold text-pitch-gold uppercase tracking-wider flex items-center gap-1 mt-1">
-                <i data-lucide="code" class="w-4 h-4 text-pitch-accent"></i> Yaradıcı: Rəsul Məmmədzadə
-            </p>
+            <div class="flex items-center gap-4 mt-2">
+                <p class="text-xs font-bold text-pitch-gold uppercase tracking-wider flex items-center gap-1">
+                    <i data-lucide="code" class="w-4 h-4 text-pitch-accent"></i> Yaradıcı: Rəsul Məmmədzadə
+                </p>
+                <button onclick="toggleAdminModal()" class="text-xs font-bold text-slate-500 hover:text-pitch-accent flex items-center gap-1 transition-colors">
+                    <i data-lucide="lock" class="w-3.5 h-3.5"></i> Admin Girişi
+                </button>
+            </div>
         </div>
     </footer>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Logic & Supabase Integration -->
     <script>
-        // İtmir, boz olmur: Yüksək keyfiyyətli birbaşa futbol qapaq şəkilləri
-        const matches = [
-            {
-                id: 1,
-                title: "AC Milan vs Liverpool 3-3 (Pen 2-3)",
-                tournament: "UEFA Çempionlar Liqası Finalı",
-                year: 2005,
-                era: "retro",
-                duration: "18 Dəq İcmal",
-                quality: "1080p HD",
-                poster: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1000&q=80",
-                videoUrl: "https://www.youtube.com/embed/m6WP8y9S3m4"
-            },
-            {
-                id: 2,
-                title: "Barcelona vs PSG 6-1",
-                tournament: "UEFA Çempionlar Liqası 1/8 Final",
-                year: 2017,
-                era: "classic",
-                duration: "20 Dəq İcmal",
-                quality: "4K 60FPS",
-                poster: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1000&q=80",
-                videoUrl: "https://www.youtube.com/embed/1v0s1Z9vQ4M"
-            },
-            {
-                id: 3,
-                title: "Braziliya vs Almaniya 1-7",
-                tournament: "Dünya Çempionatı Yarımfinal",
-                year: 2014,
-                era: "classic",
-                duration: "15 Dəq İcmal",
-                quality: "1080p HD",
-                poster: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1000&q=80",
-                videoUrl: "https://www.youtube.com/embed/4096SlyD2I4"
-            },
-            {
-                id: 4,
-                title: "Real Madrid vs Atletico Madrid 4-1",
-                tournament: "UEFA Çempionlar Liqası Finalı",
-                year: 2014,
-                era: "classic",
-                duration: "22 Dəq İcmal",
-                quality: "1080p HD",
-                poster: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1000&q=80",
-                videoUrl: "https://www.youtube.com/embed/N3f_XjO1v0k"
-            },
-            {
-                id: 5,
-                title: "Fransa vs Argentina 3-3 (Pen 2-4)",
-                tournament: "Dünya Çempionatı Finalı",
-                year: 2022,
-                era: "modern",
-                duration: "25 Dəq İcmal",
-                quality: "4K Ultra HD",
-                poster: "https://images.unsplash.com/photo-1560272564-6694e074a480?auto=format&fit=crop&w=1000&q=80",
-                videoUrl: "https://www.youtube.com/embed/msc_Tq6P7xI"
-            },
-            {
-                id: 6,
-                title: "Manchester United vs Bayern Munich 2-1",
-                tournament: "UEFA Çempionlar Liqası Finalı",
-                year: 1999,
-                era: "retro",
-                duration: "16 Dəq İcmal",
-                quality: "1080p HD",
-                poster: "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=1000&q=80",
-                videoUrl: "https://www.youtube.com/embed/a9tD_i31M9E"
-            }
-        ];
+        const SUPABASE_URL = "https://jsyecfijitjjafhfemsx.supabase.co"; 
+        // AŞAĞIDAKI DIRNAQ İÇİNƏ EKRANDAN KOPYALADIĞINIZ PUBLISHABLE KEY-İ YAPIŞDIRIN:
+        const SUPABASE_KEY = "sb_publishable_fhu6UtzT7TqiBbXTO641fQ_nG5u5Pus"; 
+        
+        const { createClient } = window.supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        let matches = [];
         let currentEra = 'all';
+
+        async function fetchMatches() {
+            try {
+                const { data, error } = await _supabase.from('matches').select('*').order('id', { ascending: false });
+                if (error) {
+                    console.error(error);
+                    document.getElementById('matchesGrid').innerHTML = `<div class="col-span-full text-center py-16 text-red-400 font-bold">Xəta baş verdi: Bazadan matçlar oxuna bilmədi.</div>`;
+                    return;
+                }
+                matches = data || [];
+                renderMatches(matches);
+            } catch (err) {
+                console.error(err);
+            }
+        }
 
         function renderMatches(data) {
             const grid = document.getElementById('matchesGrid');
@@ -287,7 +308,7 @@
             if (data.length === 0) {
                 grid.innerHTML = `
                     <div class="col-span-full text-center py-16 text-slate-400 font-bold">
-                        <p class="text-lg uppercase">Axtarışa uyğun matç tapılmadı.</p>
+                        <p class="text-lg uppercase">Hələ ki, bazada matç yoxdur. Saytın aşağısındakı Admin Girişi bölməsindən yeni matç əlavə edə bilərsiniz!</p>
                     </div>
                 `;
                 lucide.createIcons();
@@ -299,7 +320,6 @@
                 card.className = "pitch-card rounded-2xl overflow-hidden flex flex-col justify-between group";
                 card.innerHTML = `
                     <div>
-                        <!-- Yüksək Keyfiyyətli Qapaq Şəkli (Xəta verərsə fallback işləyir) -->
                         <div class="relative aspect-video overflow-hidden bg-pitch-900">
                             <img src="${match.poster}" 
                                  alt="${match.title}" 
@@ -329,7 +349,7 @@
                         <span class="text-xs font-bold text-slate-400 flex items-center gap-1.5">
                             <i data-lucide="clock" class="w-3.5 h-3.5 text-pitch-accent"></i> ${match.duration}
                         </span>
-                        <button onclick="openModal('${match.title}', '${match.videoUrl}')" class="flex items-center gap-2 text-xs font-black bg-gradient-to-r from-pitch-accent to-emerald-400 hover:opacity-90 text-black px-4 py-2.5 rounded-xl shadow-lg transition-all">
+                        <button onclick="openModal('${match.title}', '${match.video_url}')" class="flex items-center gap-2 text-xs font-black bg-gradient-to-r from-pitch-accent to-emerald-400 hover:opacity-90 text-black px-4 py-2.5 rounded-xl shadow-lg transition-all">
                             <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i> İZLƏYİN
                         </button>
                     </div>
@@ -337,6 +357,33 @@
                 grid.appendChild(card);
             });
             lucide.createIcons();
+        }
+
+        async function saveMatch(e) {
+            e.preventDefault();
+            const btn = document.getElementById('saveBtn');
+            btn.innerText = "Yadda saxlanılır...";
+
+            const newMatch = {
+                title: document.getElementById('mTitle').value,
+                tournament: document.getElementById('mTournament').value,
+                year: parseInt(document.getElementById('mYear').value),
+                era: document.getElementById('mEra').value,
+                duration: document.getElementById('mDuration').value,
+                quality: document.getElementById('mQuality').value,
+                poster: document.getElementById('mPoster').value,
+                video_url: document.getElementById('mVideoUrl').value
+            };
+
+            const { error } = await _supabase.from('matches').insert([newMatch]);
+            if (error) {
+                alert("Xəta baş verdi: " + error.message);
+            } else {
+                await fetchMatches();
+                toggleAdminModal();
+                document.getElementById('addMatchForm').reset();
+            }
+            btn.innerText = "Bazaya Əlavə Et";
         }
 
         function filterMatches() {
@@ -387,9 +434,14 @@
             modal.classList.add('hidden');
         }
 
+        function toggleAdminModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.toggle('hidden');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            renderMatches(matches);
+            fetchMatches();
         });
     </script>
 </body>
