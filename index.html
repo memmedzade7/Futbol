@@ -199,27 +199,33 @@
         </div>
     </div>
 
-    <!-- Admin Password Modal (Şifrə Tələb Edən Pəncərə) -->
-    <div id="passwordModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <!-- Admin Auth Modal (Supabase Əsl Hesab Girişi) -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="relative w-full max-w-md bg-pitch-900 rounded-2xl border border-pitch-accent/50 p-6 shadow-2xl text-center">
             <div class="w-12 h-12 bg-pitch-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-pitch-accent/30">
-                <i data-lucide="shield-lock" class="w-6 h-6 text-pitch-accent"></i>
+                <i data-lucide="user-check" class="w-6 h-6 text-pitch-accent"></i>
             </div>
             <h3 class="text-xl font-black text-white uppercase mb-2">Admin Girişi</h3>
-            <p class="text-xs text-slate-400 mb-6 font-semibold">Yeni matç əlavə etmək üçün admin şifrəsini daxil edin:</p>
+            <p class="text-xs text-slate-400 mb-6 font-semibold">Təhlükəsiz giriş üçün Supabase email və şifrənizi daxil edin:</p>
             
-            <form onsubmit="verifyAdminPassword(event)" class="space-y-4">
+            <form onsubmit="handleLogin(event)" class="space-y-4 text-left">
                 <div>
-                    <input type="password" id="adminPasswordInput" placeholder="Şifrəni yazın..." required 
-                        class="w-full bg-pitch-950 border border-white/10 rounded-xl p-3 text-white text-center font-bold tracking-widest focus:border-pitch-accent outline-none">
+                    <label class="text-xs text-slate-300 font-bold block mb-1">Email:</label>
+                    <input type="email" id="adminEmail" placeholder="email@domain.com" required 
+                        class="w-full bg-pitch-950 border border-white/10 rounded-xl p-3 text-white font-semibold focus:border-pitch-accent outline-none">
                 </div>
-                <div id="passwordError" class="text-xs font-bold text-red-500 hidden">Şifrə yanlışdır! Təkrar cəhd edin.</div>
+                <div>
+                    <label class="text-xs text-slate-300 font-bold block mb-1">Şifrə:</label>
+                    <input type="password" id="adminPassword" placeholder="••••••••" required 
+                        class="w-full bg-pitch-950 border border-white/10 rounded-xl p-3 text-white font-semibold focus:border-pitch-accent outline-none">
+                </div>
+                <div id="loginError" class="text-xs font-bold text-red-500 hidden">Giriş uğursuz oldu! Məlumatları yoxlayın.</div>
                 
-                <div class="flex gap-2">
-                    <button type="button" onclick="closePasswordModal()" class="w-1/2 bg-white/10 text-slate-300 py-2.5 rounded-xl font-bold text-xs uppercase hover:bg-white/20 transition-all">
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="closeAuthModal()" class="w-1/2 bg-white/10 text-slate-300 py-2.5 rounded-xl font-bold text-xs uppercase hover:bg-white/20 transition-all">
                         Ləğv Et
                     </button>
-                    <button type="submit" class="w-1/2 bg-gradient-to-r from-pitch-accent to-emerald-400 text-black py-2.5 rounded-xl font-black text-xs uppercase shadow-lg hover:opacity-90 transition-all">
+                    <button type="submit" id="loginBtn" class="w-1/2 bg-gradient-to-r from-pitch-accent to-emerald-400 text-black py-2.5 rounded-xl font-black text-xs uppercase shadow-lg hover:opacity-90 transition-all">
                         Daxil Ol
                     </button>
                 </div>
@@ -295,7 +301,7 @@
                 <p class="text-xs font-bold text-pitch-gold uppercase tracking-wider flex items-center gap-1">
                     <i data-lucide="code" class="w-4 h-4 text-pitch-accent"></i> Yaradıcı: Rəsul Məmmədzadə
                 </p>
-                <button onclick="openPasswordModal()" class="text-xs font-bold text-slate-500 hover:text-pitch-accent flex items-center gap-1 transition-colors">
+                <button onclick="handleAdminBtnClick()" id="adminActionBtn" class="text-xs font-bold text-slate-500 hover:text-pitch-accent flex items-center gap-1 transition-colors">
                     <i data-lucide="lock" class="w-3.5 h-3.5"></i> Admin Girişi
                 </button>
             </div>
@@ -307,9 +313,6 @@
         const SUPABASE_URL = "https://jsyecfijitjjafhfemsx.supabase.co"; 
         const SUPABASE_KEY = "sb_publishable_fhu6UtzT7TqiBbXT0641fQ_nG5u5Pus"; 
         
-        // ADMIN PANELSININ ŞİFRƏSİ (İstədiyin vaxt burdan dəyişə bilərsən):
-        const ADMIN_PASSWORD = "RM2026";
-
         const { createClient } = window.supabase;
         const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -338,7 +341,7 @@
             if (data.length === 0) {
                 grid.innerHTML = `
                     <div class="col-span-full text-center py-16 text-slate-400 font-bold">
-                        <p class="text-lg uppercase">Hələ ki, bazada matç yoxdur. Saytın aşağısındakı Admin Girişi bölməsindən yeni matç əlavə edə bilərsiniz!</p>
+                        <p class="text-lg uppercase">Hələ ki, bazada matç yoxdur. Admin paneldən matç əlavə edin!</p>
                     </div>
                 `;
                 lucide.createIcons();
@@ -407,13 +410,70 @@
 
             const { error } = await _supabase.from('matches').insert([newMatch]);
             if (error) {
-                alert("Xəta baş verdi: " + error.message);
+                alert("Xəta baş verdi: Bazaya yazmaq icazəniz yoxdur və ya giriş etməmisiniz! (" + error.message + ")");
             } else {
                 await fetchMatches();
                 toggleAdminModal();
                 document.getElementById('addMatchForm').reset();
             }
             btn.innerText = "Bazaya Əlavə Et";
+        }
+
+        /* SUPABASE REAL AUTHENTICATION LOGIC */
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const btn = document.getElementById('loginBtn');
+            btn.innerText = "Yoxlanılır...";
+
+            const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+
+            if (error) {
+                document.getElementById('loginError').innerText = "Xəta: " + error.message;
+                document.getElementById('loginError').classList.remove('hidden');
+            } else {
+                closeAuthModal();
+                updateAdminBtnState();
+                toggleAdminModal();
+            }
+            btn.innerText = "Daxil Ol";
+        }
+
+        async function handleAdminBtnClick() {
+            const { data: { session } } = await _supabase.auth.getSession();
+            if (session) {
+                toggleAdminModal();
+            } else {
+                openAuthModal();
+            }
+        }
+
+        async function updateAdminBtnState() {
+            const { data: { session } } = await _supabase.auth.getSession();
+            const btn = document.getElementById('adminActionBtn');
+            if (session) {
+                btn.innerHTML = `<i data-lucide="plus-circle" class="w-3.5 h-3.5 text-pitch-accent"></i> + Matç Əlavə Et`;
+                btn.className = "text-xs font-bold text-pitch-accent hover:underline flex items-center gap-1 transition-colors";
+            } else {
+                btn.innerHTML = `<i data-lucide="lock" class="w-3.5 h-3.5"></i> Admin Girişi`;
+                btn.className = "text-xs font-bold text-slate-500 hover:text-pitch-accent flex items-center gap-1 transition-colors";
+            }
+            lucide.createIcons();
+        }
+
+        function openAuthModal() {
+            document.getElementById('authModal').classList.remove('hidden');
+            document.getElementById('loginError').classList.add('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function toggleAdminModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.toggle('hidden');
         }
 
         function filterMatches() {
@@ -464,36 +524,10 @@
             modal.classList.add('hidden');
         }
 
-        /* TƏHLÜKƏSİZLİK VƏ ŞİFRƏ FUNKSİYALARI */
-        function openPasswordModal() {
-            document.getElementById('passwordModal').classList.remove('hidden');
-            document.getElementById('adminPasswordInput').value = '';
-            document.getElementById('passwordError').classList.add('hidden');
-        }
-
-        function closePasswordModal() {
-            document.getElementById('passwordModal').classList.add('hidden');
-        }
-
-        function verifyAdminPassword(e) {
-            e.preventDefault();
-            const input = document.getElementById('adminPasswordInput').value;
-            if (input === ADMIN_PASSWORD) {
-                closePasswordModal();
-                toggleAdminModal();
-            } else {
-                document.getElementById('passwordError').classList.remove('hidden');
-            }
-        }
-
-        function toggleAdminModal() {
-            const modal = document.getElementById('adminModal');
-            modal.classList.toggle('hidden');
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             fetchMatches();
+            updateAdminBtnState();
         });
     </script>
 </body>
