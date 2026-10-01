@@ -37,13 +37,42 @@
         }
     </script>
     <style>
+        /* Standart Arxa Fon (Bütün Matçlar) */
         body {
+            transition: background-color 0.6s ease, background-image 0.6s ease;
             background-color: #040d08;
             background-image: 
                 radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 60%),
                 linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 100% 100%, 30px 30px, 30px 30px;
+        }
+
+        /* Retro Dövrü Fonu (1990-2009) - Qədim Vintage Sepia / Tünd Qızılı */
+        body.theme-retro {
+            background-color: #120d06;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.18) 0%, transparent 60%),
+                linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+        }
+
+        /* Klassik Dövr Fonu (2010-2019) - Dərin Göy / Lacivərd */
+        body.theme-classic {
+            background-color: #050b14;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.18) 0%, transparent 60%),
+                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+        }
+
+        /* Günümüz Dövr Fonu (2020+) - Ultra-tünd Kiber-Bənövşəyi */
+        body.theme-modern {
+            background-color: #0d0614;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.18) 0%, transparent 60%),
+                linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
         }
 
         .gold-gradient-text {
@@ -57,6 +86,7 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(251, 191, 36, 0.15);
             box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
         }
 
         .glass-card:hover {
@@ -81,66 +111,76 @@
         }
     </style>
 </head>
-<body class="text-gray-100 font-sans min-h-screen flex flex-col selection:bg-gold-500 selection:text-black">
+<body id="mainBody" class="text-gray-100 font-sans min-h-screen flex flex-col selection:bg-gold-500 selection:text-black">
 
     <!-- Header / Navbar -->
-    <header class="sticky top-0 z-40 bg-pitch-950/85 backdrop-blur-xl border-b border-gold-500/15">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-6">
+    <header class="sticky top-0 z-40 bg-pitch-950/90 backdrop-blur-xl border-b border-gold-500/15">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col gap-3">
             
-            <!-- Logo & Nav Tabs -->
-            <div class="flex items-center space-x-8">
-                <!-- Brand Logo -->
-                <a href="#" class="flex items-center space-x-3 group">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-gold-500 via-pitch-accent to-pitch-800 p-[1px] flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                        <div class="w-full h-full bg-pitch-950 rounded-[11px] flex items-center justify-center">
-                            <i data-lucide="trophy" class="w-5 h-5 text-gold-400"></i>
+            <!-- Üst Sıra: Logo, Menyu və Sağ Tərəf -->
+            <div class="flex items-center justify-between gap-4">
+                <!-- Logo & Nav Tabs (Tam Sola Çəkildi) -->
+                <div class="flex items-center space-x-6 sm:space-x-8">
+                    <!-- Brand Logo -->
+                    <a href="#" class="flex items-center space-x-2.5 group">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-gold-500 via-pitch-accent to-pitch-800 p-[1px] flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                            <div class="w-full h-full bg-pitch-950 rounded-[11px] flex items-center justify-center">
+                                <i data-lucide="trophy" class="w-5 h-5 text-gold-400"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <span class="text-2xl font-black font-brand tracking-wider gold-gradient-text uppercase block leading-none">RM MATCH</span>
-                        <span class="text-[10px] text-emerald-400/80 font-medium tracking-widest uppercase mt-0.5 block">Minlərlə matç, tək məkan</span>
-                    </div>
-                </a>
+                        <div>
+                            <span class="text-xl sm:text-2xl font-black font-brand tracking-wider gold-gradient-text uppercase block leading-none">RM MATCH</span>
+                            <span class="text-[9px] sm:text-[10px] text-emerald-400/80 font-medium tracking-widest uppercase mt-0.5 block">Minlərlə matç, tək məkan</span>
+                        </div>
+                    </a>
 
-                <!-- Navigation Tabs (YENİ ƏLAVƏ) -->
-                <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold">
-                    <a href="#matches" class="nav-tab active text-white hover:text-gold-400 transition-colors py-1 flex items-center gap-2">
-                        <i data-lucide="play-circle" class="w-4 h-4 text-pitch-accent"></i> Matçlar
-                    </a>
-                    <a href="#tournaments" class="nav-tab text-gray-300 hover:text-gold-400 transition-colors py-1 flex items-center gap-2">
-                        <i data-lucide="award" class="w-4 h-4 text-gold-400"></i> Turnirlər
-                    </a>
-                    <a href="#players" class="nav-tab text-gray-300 hover:text-gold-400 transition-colors py-1 flex items-center gap-2">
-                        <i data-lucide="users" class="w-4 h-4 text-pitch-accent"></i> Oyunçular
-                    </a>
-                    <a href="#clubs" class="nav-tab text-gray-300 hover:text-gold-400 transition-colors py-1 flex items-center gap-2">
-                        <i data-lucide="shield" class="w-4 h-4 text-gold-400"></i> Klublar
-                    </a>
-                </nav>
-            </div>
-
-            <!-- Right Side: Creator Sign & Search -->
-            <div class="flex items-center space-x-4">
-                <!-- Search Box -->
-                <div class="relative w-48 sm:w-64">
-                    <input type="text" id="searchInput" oninput="filterMatches()" placeholder="Matç, komanda, il..." 
-                        class="w-full bg-pitch-900/90 text-xs sm:text-sm text-gray-100 placeholder-gray-400 rounded-xl pl-9 pr-4 py-2 border border-gold-500/20 focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400 transition-all">
-                    <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-2.5"></i>
+                    <!-- Navigation Tabs -->
+                    <nav class="hidden lg:flex items-center space-x-6 text-sm font-semibold">
+                        <a href="#matches" class="nav-tab active text-white hover:text-gold-400 transition-colors py-1 flex items-center gap-2">
+                            <i data-lucide="play-circle" class="w-4 h-4 text-pitch-accent"></i> Matçlar
+                        </a>
+                        <a href="#tournaments" class="nav-tab text-gray-300 hover:text-gold-400 transition-colors py-1 flex items-center gap-2">
+                            <i data-lucide="award" class="w-4 h-4 text-gold-400"></i> Turnirlər
+                        </a>
+                        <a href="#players" class="nav-tab text-gray-300 hover:text-gold-400 transition-colors py-1 flex items-center gap-2">
+                            <i data-lucide="users" class="w-4 h-4 text-pitch-accent"></i> Oyunçular
+                        </a>
+                        <a href="#clubs" class="nav-tab text-gray-300 hover:text-gold-400 transition-colors py-1 flex items-center gap-2">
+                            <i data-lucide="shield" class="w-4 h-4 text-gold-400"></i> Klublar
+                        </a>
+                    </nav>
                 </div>
 
-                <!-- Creator Badge -->
-                <div class="hidden lg:flex flex-col items-end border-l border-gold-500/20 pl-4">
-                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">Platforma</span>
-                    <span class="text-xs font-bold text-gold-400 flex items-center gap-1">
+                <!-- Sağ Tərəf: Yaradıcı Yazısı və Axtarış Zolağı -->
+                <div class="flex flex-col items-end gap-1 ml-auto">
+                    <!-- Axtarış Zolağının Üstündəki Yaradıcı Yazısı -->
+                    <div class="text-[11px] font-bold text-gold-400 flex items-center gap-1">
                         <i data-lucide="sparkles" class="w-3 h-3 text-pitch-accent"></i> Yaradıcı: Rəsul Məmmədzadə
-                    </span>
+                    </div>
+
+                    <!-- Axtarış Zolağı (Tam Sağa Çəkildi) -->
+                    <div class="relative w-44 sm:w-64">
+                        <input type="text" id="searchInput" oninput="filterMatches()" placeholder="Matç, komanda, il..." 
+                            class="w-full bg-pitch-900/90 text-xs sm:text-sm text-gray-100 placeholder-gray-400 rounded-xl pl-9 pr-4 py-1.5 sm:py-2 border border-gold-500/20 focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400 transition-all">
+                        <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-2 sm:top-2.5"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alt Sıra: Mərkəzdə Yuxarıya Yerləşdirilmiş DÖVR TABLARI -->
+            <div class="flex items-center justify-center border-t border-gold-500/10 pt-2.5">
+                <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 bg-pitch-900/80 p-1.5 rounded-2xl border border-gold-500/20" id="eraFilters">
+                    <button onclick="setEraFilter('all')" class="era-btn active-era px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-gold-500 text-pitch-950 transition-all shadow-md">Bütün Matçlar</button>
+                    <button onclick="setEraFilter('retro')" class="era-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold text-gray-300 hover:text-white transition-all">Retro (1990 - 2009)</button>
+                    <button onclick="setEraFilter('classic')" class="era-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold text-gray-300 hover:text-white transition-all">Klassik (2010 - 2019)</button>
+                    <button onclick="setEraFilter('modern')" class="era-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold text-gray-300 hover:text-white transition-all">Günümüz (2020+)</button>
                 </div>
             </div>
 
         </div>
 
         <!-- Mobile Navigation Tabs Bar -->
-        <div class="md:hidden flex items-center justify-around border-t border-gold-500/10 py-2.5 px-2 bg-pitch-950/90 text-xs font-medium text-gray-300">
+        <div class="lg:hidden flex items-center justify-around border-t border-gold-500/10 py-2.5 px-2 bg-pitch-950/90 text-xs font-medium text-gray-300">
             <a href="#matches" class="text-gold-400 font-bold flex items-center gap-1"><i data-lucide="play-circle" class="w-3.5 h-3.5"></i> Matçlar</a>
             <a href="#tournaments" class="hover:text-gold-400 flex items-center gap-1"><i data-lucide="award" class="w-3.5 h-3.5"></i> Turnirlər</a>
             <a href="#players" class="hover:text-gold-400 flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> Oyunçular</a>
@@ -164,22 +204,6 @@
                 <p class="text-gray-300 text-sm sm:text-base mb-6 leading-relaxed">
                     90-cı illər, 2000-ci illərin əfsanələri və günümüzün ən həyəcanlı matçları — 15-20 dəqiqəlik yüksək keyfiyyətli xüsusi icmallarla.
                 </p>
-            </div>
-        </div>
-
-        <!-- Filter Options -->
-        <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                    <i data-lucide="sliders-horizontal" class="w-5 h-5 text-pitch-accent"></i> Dövrlərə Göre Filtrlə
-                </h3>
-            </div>
-            
-            <div class="flex flex-wrap gap-2" id="eraFilters">
-                <button onclick="setEraFilter('all')" class="era-btn active-era px-4 py-2 rounded-xl text-xs font-bold bg-gold-500 text-pitch-950 transition-all shadow-lg">Bütün Matçlar</button>
-                <button onclick="setEraFilter('retro')" class="era-btn px-4 py-2 rounded-xl text-xs font-bold bg-pitch-900/80 text-gray-300 border border-gold-500/20 hover:border-gold-400 hover:text-white transition-all">Retro (1990 - 2009)</button>
-                <button onclick="setEraFilter('classic')" class="era-btn px-4 py-2 rounded-xl text-xs font-bold bg-pitch-900/80 text-gray-300 border border-gold-500/20 hover:border-gold-400 hover:text-white transition-all">Klassik (2010 - 2019)</button>
-                <button onclick="setEraFilter('modern')" class="era-btn px-4 py-2 rounded-xl text-xs font-bold bg-pitch-900/80 text-gray-300 border border-gold-500/20 hover:border-gold-400 hover:text-white transition-all">Günümüz (2020+)</button>
             </div>
         </div>
 
@@ -208,7 +232,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-pitch-950 border-t border-gold-500/15 py-8 mt-16">
+    <footer class="bg-pitch-950/80 border-t border-gold-500/15 py-8 mt-16">
         <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-xs sm:text-sm flex flex-col items-center gap-2">
             <p>© 2026 <strong class="text-white">RM MATCH</strong>. Bütün hüquqlar qorunur.</p>
             <p class="text-gold-400/90 font-semibold flex items-center gap-1.5">
@@ -359,14 +383,23 @@
 
         function setEraFilter(era) {
             currentEra = era;
+            const body = document.getElementById('mainBody');
+            
+            // Arxa fon rənglərini dövrə uyğun dəyişdiririk
+            body.className = "text-gray-100 font-sans min-h-screen flex flex-col selection:bg-gold-500 selection:text-black";
+            if (era === 'retro') body.classList.add('theme-retro');
+            else if (era === 'classic') body.classList.add('theme-classic');
+            else if (era === 'modern') body.classList.add('theme-modern');
+
+            // Düymələrin üslubunu yeniləyirik
             const buttons = document.querySelectorAll('.era-btn');
             buttons.forEach(btn => {
-                btn.classList.remove('bg-gold-500', 'text-pitch-950');
-                btn.classList.add('bg-pitch-900/80', 'text-gray-300');
+                btn.classList.remove('bg-gold-500', 'text-pitch-950', 'shadow-md');
+                btn.classList.add('text-gray-300');
             });
             
-            event.target.classList.remove('bg-pitch-900/80', 'text-gray-300');
-            event.target.classList.add('bg-gold-500', 'text-pitch-950');
+            event.target.classList.remove('text-gray-300');
+            event.target.classList.add('bg-gold-500', 'text-pitch-950', 'shadow-md');
 
             filterMatches();
         }
